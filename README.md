@@ -13,9 +13,25 @@ Start here: **[PLAN.md](./PLAN.md)** — full MVP build plan (must-haves, nice-t
 - Swift + SwiftUI (iPhone)
 - SwiftData (on-device)
 - RevenueCat (Lefty+)
-- OpenAI vision (Teach Me Left-Handed)
-- No accounts, no backend, no social
+- OpenAI vision via Cloudflare Worker (`workers/lefty-teach`) — API key never in the app
+- No accounts, no custom backend database, no social
 
 ## Open in Xcode
 
 Open `lefty.xcodeproj`. Bundle ID: `com.knk.lefty`.
+
+## Teach Me Left-Handed secrets
+
+1. Copy `lefty/Secrets.example.plist` → `lefty/Secrets.plist` (gitignored).
+2. Set `TeachWorkerURL` to `https://lefty-teach.nina-c51.workers.dev`.
+3. Set `LeftyAppSecret` to the same value as the Worker’s `LEFTY_APP_SECRET`.
+4. On Cloudflare, plug in OpenAI (you do this once):
+
+```bash
+cd workers/lefty-teach
+npx wrangler secret put OPENAI_API_KEY
+```
+
+Details: [workers/lefty-teach/README.md](./workers/lefty-teach/README.md).
+
+Without `Secrets.plist`, DEBUG builds fall back to the stub guide service so the UI still runs.

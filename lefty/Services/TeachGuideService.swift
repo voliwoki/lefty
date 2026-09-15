@@ -1,11 +1,12 @@
 import Foundation
+import UIKit
 
 protocol TeachGuideService {
-    func generateGuide(text: String, hasImage: Bool) async throws -> GeneratedGuide
+    func generateGuide(text: String, image: UIImage?) async throws -> GeneratedGuide
 }
 
 struct StubTeachGuideService: TeachGuideService {
-    func generateGuide(text: String, hasImage: Bool) async throws -> GeneratedGuide {
+    func generateGuide(text: String, image: UIImage?) async throws -> GeneratedGuide {
         try await Task.sleep(for: .seconds(2))
 
         let lowercased = text.lowercased()

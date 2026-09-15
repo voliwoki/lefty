@@ -13,13 +13,18 @@ struct TeachFlowView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
 
-    private let guideService: TeachGuideService = StubTeachGuideService()
+    private let guideService: TeachGuideService
 
     @State private var phase: TeachPhase = .input
     @State private var selectedImage: UIImage?
     @State private var typedText = ""
     @State private var generatedGuide: GeneratedGuide?
     @State private var isSaved = false
+    @State private var errorMessage: String?
+
+    init(guideService: TeachGuideService = TeachGuideServiceFactory.make()) {
+        self.guideService = guideService
+    }
 
     var body: some View {
         NavigationStack {
@@ -30,6 +35,19 @@ struct TeachFlowView: View {
                             dismiss()
                         }
                     }
+                }
+                .alert(
+                    String(localized: "Couldn't make this left-handed"),
+                    isPresented: Binding(
+                        get: { errorMessage != nil },
+                        set: { if !$0 { errorMessage = nil } }
+                    )
+                ) {
+                    Button(String(localized: "OK"), role: .cancel) {
+                        errorMessage = nil
+                    }
+                } message: {
+                    Text(errorMessage ?? "")
                 }
         }
     }
@@ -60,12 +78,18 @@ struct TeachFlowView: View {
 
     private func generate() {
         phase = .processing
+        errorMessage = nil
         Task {
             do {
-                let guide = try await guideService.generateGuide(text: typedText, hasImage: selectedImage != nil)
+                let guide = try await guideService.generateGuide(
+                    text: typedText,
+                    image: selectedImage
+                )
                 generatedGuide = guide
                 phase = .overview
             } catch {
+                errorMessage = (error as? LocalizedError)?.errorDescription
+                    ?? String(localized: "Something went wrong. Try again.")
                 phase = .input
             }
         }
@@ -79,6 +103,6 @@ struct TeachFlowView: View {
 }
 
 #Preview {
-    TeachFlowView()
+    TeachFlowView(guideService: StubTeachGuideService())
         .modelContainer(for: SavedGuide.self, inMemory: true)
 }

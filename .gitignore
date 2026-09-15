@@ -24,3 +24,8 @@ Secrets.plist
 Secrets.xcconfig
 *.env
 .env
+
+# Cloudflare Worker local secrets / deps
+workers/**/.dev.vars
+workers/**/node_modules/
+workers/**/.wrangler/
