@@ -1,0 +1,117 @@
+[
+  {
+    "id": "writing-grip",
+    "title": "Comfortable Handwriting Grip",
+    "category": "Writing",
+    "icon": "pencil.and.outline",
+    "summary": "Angle your paper and adjust your grip so writing feels natural, not cramped.",
+    "steps": [
+      { "number": 1, "instruction": "Rotate your paper 30 to 45 degrees clockwise, so the top-right corner points toward you. This lets your hand follow the line naturally instead of curling over it." },
+      { "number": 2, "instruction": "Hold the pen about an inch above the tip. This keeps your knuckles from blocking your view of what you just wrote." },
+      { "number": 3, "instruction": "Rest your wrist just below the line you're writing, rather than hooking over the top, so fresh ink has time to dry before your hand passes over it." },
+      { "number": 4, "instruction": "Try a soft, low-friction pen like a gel or rollerball. It glides instead of drags, which reduces smudging and hand strain during long sessions." }
+    ]
+  },
+  {
+    "id": "writing-smudge",
+    "title": "Avoiding Ink Smudges",
+    "category": "Writing",
+    "icon": "pencil.tip",
+    "summary": "Simple habits that keep your hand from dragging through wet ink.",
+    "steps": [
+      { "number": 1, "instruction": "Choose quick-drying ink. Ballpoint and gel pens dry faster than fountain pens, so your hand won't drag through wet ink." },
+      { "number": 2, "instruction": "Underwrite instead of overwriting: keep your wrist below the line rather than arching over it." },
+      { "number": 3, "instruction": "Use a slight clockwise paper tilt, around 30 degrees, to keep your hand moving away from what you just wrote." },
+      { "number": 4, "instruction": "Practice with pencil first. Pencil lead smudges less than ink and erases mistakes while you build the new grip." }
+    ]
+  },
+  {
+    "id": "scissors-grip",
+    "title": "Left-Handed Scissors Grip",
+    "category": "Scissors",
+    "icon": "scissors",
+    "summary": "How to get a clean, visible cutting line with or without left-handed scissors.",
+    "steps": [
+      { "number": 1, "instruction": "Use left-handed scissors if you can. The blade order is reversed, so you can actually see your cutting line instead of it being hidden." },
+      { "number": 2, "instruction": "Keep the blade on the right side of your hand. This lets the top blade push the material away from your view as you cut." },
+      { "number": 3, "instruction": "Cut in short, controlled strokes. Let the scissors do the work rather than forcing them through the material." },
+      { "number": 4, "instruction": "If you only have right-handed scissors, turn the paper instead of the scissors, and cut with the blade closer to your body for more control." }
+    ]
+  },
+  {
+    "id": "kitchen-knife",
+    "title": "Kitchen Knife Safety",
+    "category": "Kitchen",
+    "icon": "fork.knife",
+    "summary": "A left-handed-friendly grip and stance for safe, confident cutting.",
+    "steps": [
+      { "number": 1, "instruction": "Stand to the left of a right-handed helper when cooking together, so your elbows don't bump." },
+      { "number": 2, "instruction": "Curl the fingertips of your guiding hand under, using your knuckles as a guide for the blade." },
+      { "number": 3, "instruction": "Angle the blade slightly toward you, the mirror of the usual right-handed advice, to keep your cutting line visible." },
+      { "number": 4, "instruction": "Look for a straight-edge chef's knife. Most work equally well for both hands, with no swap needed." }
+    ]
+  },
+  {
+    "id": "kitchen-can-opener",
+    "title": "Can Opener Technique",
+    "category": "Kitchen",
+    "icon": "cup.and.saucer.fill",
+    "summary": "Two easy ways around a right-handed-only can opener.",
+    "steps": [
+      { "number": 1, "instruction": "Try a left-handed can opener. Standard manual openers are built for right-handed turning; left-handed versions mirror the gear direction." },
+      { "number": 2, "instruction": "Or switch to an electric opener. It works the same regardless of which hand presses the button, removing the handedness problem entirely." },
+      { "number": 3, "instruction": "With a manual opener, grip the can with your right hand and let your dominant left hand control the turning mechanism for better leverage." }
+    ]
+  },
+  {
+    "id": "instruments-guitar",
+    "title": "Guitar Basics for Lefties",
+    "category": "Instruments",
+    "icon": "music.note",
+    "summary": "Decide whether to restring left-handed or adapt to a standard guitar.",
+    "steps": [
+      { "number": 1, "instruction": "Decide early: restring a guitar left-handed by reversing the strings, or learn right-handed and simply fret with your left hand." },
+      { "number": 2, "instruction": "Try before you commit. Borrow or rent a left-handed guitar for a few weeks; a restrung guitar can feel different since the body shape stays right-handed." },
+      { "number": 3, "instruction": "Look for left-handed-specific lessons. Chord charts and finger positions are mirrored, so right-handed tutorials can be confusing without translation." },
+      { "number": 4, "instruction": "Give it time either way. Many left-handed guitarists play standard right-handed guitars comfortably, there's no single correct way." }
+    ]
+  },
+  {
+    "id": "crafts-knitting",
+    "title": "Knitting Cast-On",
+    "category": "Crafts",
+    "icon": "paintbrush.pointed.fill",
+    "summary": "Mirror the pattern and build the cast-on motion that feels natural to you.",
+    "steps": [
+      { "number": 1, "instruction": "Mirror the pattern: hold your needles and yarn as the reflection of a right-handed diagram. What's their right hand is your left." },
+      { "number": 2, "instruction": "Or try knitting right-handed patterns exactly as shown, just using your left hand for the working needle, whichever feels more natural." },
+      { "number": 3, "instruction": "Watch mirrored video tutorials. Seeing the motion clicks faster than reading text instructions that describe hand swaps." },
+      { "number": 4, "instruction": "Practice the cast-on slowly. Loop the yarn over your thumb and pointer finger the way that feels most natural, then adjust tension once the motion feels comfortable." }
+    ]
+  },
+  {
+    "id": "crafts-crochet",
+    "title": "Crochet Basics",
+    "category": "Crafts",
+    "icon": "circle.grid.3x3.fill",
+    "summary": "Hook grip, yarn tension, and turning direction for left-handed crochet.",
+    "steps": [
+      { "number": 1, "instruction": "Hold the hook in your left hand, gripped like a pencil or like a knife, whichever feels more natural to you." },
+      { "number": 2, "instruction": "Let yarn tension flow through your right hand. Most tensioning techniques transfer directly since the yarn hand rarely needs to mirror the hook hand." },
+      { "number": 3, "instruction": "Turn your work the opposite way. When a pattern says turn clockwise, you'll likely turn counter-clockwise to keep your stitches even." },
+      { "number": 4, "instruction": "Follow video tutorials over diagrams. Diagrams are usually drawn for right-handed crocheters and are easy to mirror incorrectly." }
+    ]
+  },
+  {
+    "id": "crafts-knots",
+    "title": "Tying Knots",
+    "category": "Crafts",
+    "icon": "link",
+    "summary": "The mirror motion that makes common knots easy with your left hand.",
+    "steps": [
+      { "number": 1, "instruction": "Learn the mirror motion once. Most knots, like a bowline or shoelace knot, work identically left-handed; only the starting hand changes." },
+      { "number": 2, "instruction": "Practice with thicker rope first. It's easier to see and control while you're building new muscle memory." },
+      { "number": 3, "instruction": "Go slow before you go fast. Tie the knot slowly a few times before trying to speed up, rushing early builds the wrong habit." }
+    ]
+  }
+]

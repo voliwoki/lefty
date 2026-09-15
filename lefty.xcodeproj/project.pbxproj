@@ -256,6 +256,8 @@
 				DEVELOPMENT_TEAM = TJ54LM2JGZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Lefty uses your camera to photograph instructions, diagrams, or objects so it can teach you the left-handed way to do it.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Lefty uses photos you choose so it can teach you the left-handed way to do what's in them.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -288,6 +290,8 @@
 				DEVELOPMENT_TEAM = TJ54LM2JGZ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Lefty uses your camera to photograph instructions, diagrams, or objects so it can teach you the left-handed way to do it.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Lefty uses photos you choose so it can teach you the left-handed way to do what's in them.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -6,12 +6,18 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct leftyApp: App {
+    init() {
+        FontRegistrar.registerBundledFonts()
+    }
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabRootView()
         }
+        .modelContainer(for: [UserPreferences.self, FavoriteGuide.self, SavedGuide.self])
     }
 }
