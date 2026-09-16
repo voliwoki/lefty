@@ -1,19 +1,29 @@
-enum LearnCategory: String, Codable, CaseIterable, Identifiable {
+enum LearnCategory: String, Codable, CaseIterable, Identifiable, Hashable {
     case writing = "Writing"
-    case scissors = "Scissors"
-    case kitchen = "Kitchen"
+    case toolsAndAccessories = "Tools & Accessories"
+    case sports = "Sports"
     case instruments = "Instruments"
-    case crafts = "Crafts"
+    case kitchen = "Kitchen"
 
     var id: String { rawValue }
 
     var tone: ChipTone {
         switch self {
         case .writing: .yellow
-        case .scissors: .pink
-        case .kitchen: .green
+        case .toolsAndAccessories: .green
+        case .sports: .pink
         case .instruments: .purple
-        case .crafts: .purple
+        case .kitchen: .yellow
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .writing: "pencil"
+        case .toolsAndAccessories: "wrench.and.screwdriver.fill"
+        case .sports: "sportscourt.fill"
+        case .instruments: "music.note"
+        case .kitchen: "fork.knife"
         }
     }
 }

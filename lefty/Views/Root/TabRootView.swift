@@ -4,6 +4,11 @@ struct TabRootView: View {
     @State private var selectedTab: AppTab = .home
     @State private var previousTab: AppTab = .home
     @State private var isTeachPresented = false
+    @AppStorage("appearancePreference") private var appearanceRawValue: String = AppAppearance.system.rawValue
+
+    private var appearance: AppAppearance {
+        AppAppearance(rawValue: appearanceRawValue) ?? .system
+    }
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -22,9 +27,9 @@ struct TabRootView: View {
                 .tabItem { Label(AppTab.teach.title, systemImage: AppTab.teach.icon) }
                 .tag(AppTab.teach)
 
-            PracticeView()
-                .tabItem { Label(AppTab.practice.title, systemImage: AppTab.practice.icon) }
-                .tag(AppTab.practice)
+            SettingsView()
+                .tabItem { Label(AppTab.settings.title, systemImage: AppTab.settings.icon) }
+                .tag(AppTab.settings)
 
             MyLeftyView()
                 .tabItem { Label(AppTab.myLefty.title, systemImage: AppTab.myLefty.icon) }
@@ -42,6 +47,7 @@ struct TabRootView: View {
         .sheet(isPresented: $isTeachPresented) {
             TeachFlowView()
         }
+        .preferredColorScheme(appearance.colorScheme)
     }
 }
 

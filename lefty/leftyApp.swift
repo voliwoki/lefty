@@ -18,6 +18,6 @@ struct leftyApp: App {
         WindowGroup {
             TabRootView()
         }
-        .modelContainer(for: [UserPreferences.self, FavoriteGuide.self, SavedGuide.self])
+        .modelContainer(for: [FavoriteGuide.self, SavedGuide.self])
     }
 }

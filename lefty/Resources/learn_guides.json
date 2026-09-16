@@ -1,117 +1,397 @@
 [
   {
-    "id": "writing-grip",
-    "title": "Comfortable Handwriting Grip",
+    "id": "writing-pencil-grip-height",
+    "title": "The Tripod Grip",
     "category": "Writing",
-    "icon": "pencil.and.outline",
-    "summary": "Angle your paper and adjust your grip so writing feels natural, not cramped.",
+    "icon": "pencil",
+    "summary": "Hold the pencil about an inch above the tip, resting it between your thumb and index finger with your middle finger supporting it underneath.",
     "steps": [
-      { "number": 1, "instruction": "Rotate your paper 30 to 45 degrees clockwise, so the top-right corner points toward you. This lets your hand follow the line naturally instead of curling over it." },
-      { "number": 2, "instruction": "Hold the pen about an inch above the tip. This keeps your knuckles from blocking your view of what you just wrote." },
-      { "number": 3, "instruction": "Rest your wrist just below the line you're writing, rather than hooking over the top, so fresh ink has time to dry before your hand passes over it." },
-      { "number": 4, "instruction": "Try a soft, low-friction pen like a gel or rollerball. It glides instead of drags, which reduces smudging and hand strain during long sessions." }
+      { "number": 1, "instruction": "Hold the pencil about an inch above the tip, resting it lightly between your thumb and index finger with your middle finger supporting it underneath. This \"tripod grip\" keeps your knuckles from blocking your view of what you're writing." }
     ]
   },
   {
-    "id": "writing-smudge",
-    "title": "Avoiding Ink Smudges",
+    "id": "writing-angle-your-paper",
+    "title": "Angle Your Paper",
+    "category": "Writing",
+    "icon": "doc.text",
+    "summary": "Tilt your paper clockwise, with the top-right corner pointing roughly toward the middle of your body.",
+    "steps": [
+      { "number": 1, "instruction": "Tilt your paper clockwise by up to 45 degrees, with the top-right corner pointing roughly toward the middle of your body. This lets your hand slide smoothly under the writing line instead of curling over it." }
+    ]
+  },
+  {
+    "id": "writing-keep-your-wrist-straight",
+    "title": "Keep Your Wrist Straight",
+    "category": "Writing",
+    "icon": "hand.raised.fill",
+    "summary": "Keep your wrist straight instead of curling it over your writing — a hooked wrist causes more strain and messier handwriting over time.",
+    "steps": [
+      { "number": 1, "instruction": "Keep your wrist straight instead of curling it over your writing — a hooked wrist causes more strain and messier handwriting over time." }
+    ]
+  },
+  {
+    "id": "writing-use-a-pencil-grip",
+    "title": "Grips & Wide Barrels",
     "category": "Writing",
     "icon": "pencil.tip",
-    "summary": "Simple habits that keep your hand from dragging through wet ink.",
+    "summary": "Triangular or extra-wide pencils naturally encourage the tripod grip, and a moulded finger grip works just as well on a pencil you already like.",
     "steps": [
-      { "number": 1, "instruction": "Choose quick-drying ink. Ballpoint and gel pens dry faster than fountain pens, so your hand won't drag through wet ink." },
-      { "number": 2, "instruction": "Underwrite instead of overwriting: keep your wrist below the line rather than arching over it." },
-      { "number": 3, "instruction": "Use a slight clockwise paper tilt, around 30 degrees, to keep your hand moving away from what you just wrote." },
-      { "number": 4, "instruction": "Practice with pencil first. Pencil lead smudges less than ink and erases mistakes while you build the new grip." }
+      { "number": 1, "instruction": "Pencils and pens with a triangular or extra-wide barrel naturally encourage the tripod grip and are easier for small hands to control. A moulded finger grip that slides onto a normal pencil works just as well if you already have one you like." }
     ]
   },
   {
-    "id": "scissors-grip",
-    "title": "Left-Handed Scissors Grip",
-    "category": "Scissors",
+    "id": "writing-whiteboard-smudge-fix",
+    "title": "Whiteboard Smudge Fix",
+    "category": "Writing",
+    "icon": "square.and.pencil",
+    "summary": "If you're writing on a whiteboard or chalkboard, try holding your hand slightly higher than the line you're writing to avoid smudging as you go.",
+    "steps": [
+      { "number": 1, "instruction": "If you're writing on a whiteboard or chalkboard, try holding your hand slightly higher than the line you're writing to avoid smudging as you go." }
+    ]
+  },
+  {
+    "id": "writing-spiral-notebook-flip",
+    "title": "Spiral Notebook Flip",
+    "category": "Writing",
+    "icon": "book.closed.fill",
+    "summary": "When using a spiral notebook, flip it so the spiral is on the right, or look for notebooks made with left-handed layouts.",
+    "steps": [
+      { "number": 1, "instruction": "When using a spiral notebook, flip it so the spiral is on the right, or look for notebooks made with left-handed layouts." }
+    ]
+  },
+  {
+    "id": "writing-offset-tip-pens",
+    "title": "Offset-Tip Pens",
+    "category": "Writing",
+    "icon": "pencil.tip",
+    "summary": "Pens with the tip angled off from the barrel keep your fingers back from wet ink and give a clearer view of the line.",
+    "steps": [
+      { "number": 1, "instruction": "Some pens are made with the tip angled slightly off from the barrel, which keeps your fingers back from the wet ink and gives a clearer view of the line as you write. They take a little getting used to, but many left-handers find them worth trying." }
+    ]
+  },
+  {
+    "id": "writing-lighten-your-grip",
+    "title": "Practice a Lighter Grip",
+    "category": "Writing",
+    "icon": "doc.on.doc.fill",
+    "summary": "Try writing on paper stacked over carbon paper — the goal is to write clearly without leaving a mark on the sheets underneath.",
+    "steps": [
+      { "number": 1, "instruction": "If you tend to press hard, try writing on a few sheets of paper stacked with carbon paper between them. The goal is to write clearly on the top sheet without leaving a mark on the ones underneath — a simple way to train a lighter, more relaxed hold." }
+    ]
+  },
+  {
+    "id": "tools-real-left-handed-scissors",
+    "title": "Real Left-Handed Scissors",
+    "category": "Tools & Accessories",
     "icon": "scissors",
-    "summary": "How to get a clean, visible cutting line with or without left-handed scissors.",
+    "summary": "The blades are reversed, not just the handles — and true left- and right-handed scissors can't both be one \"universal\" pair.",
     "steps": [
-      { "number": 1, "instruction": "Use left-handed scissors if you can. The blade order is reversed, so you can actually see your cutting line instead of it being hidden." },
-      { "number": 2, "instruction": "Keep the blade on the right side of your hand. This lets the top blade push the material away from your view as you cut." },
-      { "number": 3, "instruction": "Cut in short, controlled strokes. Let the scissors do the work rather than forcing them through the material." },
-      { "number": 4, "instruction": "If you only have right-handed scissors, turn the paper instead of the scissors, and cut with the blade closer to your body for more control." }
+      { "number": 1, "instruction": "Real left-handed scissors have the blades reversed, not just the handles — the top blade sits on the left so you can actually see your cutting line. Watch out for scissors marketed as \"universal\" or \"ambidextrous\": true left- and right-handed scissors can't both be one pair, since the blades themselves would need to face opposite ways." }
     ]
   },
   {
-    "id": "kitchen-knife",
-    "title": "Kitchen Knife Safety",
-    "category": "Kitchen",
-    "icon": "fork.knife",
-    "summary": "A left-handed-friendly grip and stance for safe, confident cutting.",
+    "id": "tools-which-way-the-waste-falls",
+    "title": "Which Way the Waste Falls",
+    "category": "Tools & Accessories",
+    "icon": "scissors",
+    "summary": "When cutting, always cut so the waste piece falls to the right of the blade — it keeps your view of the line clear.",
     "steps": [
-      { "number": 1, "instruction": "Stand to the left of a right-handed helper when cooking together, so your elbows don't bump." },
-      { "number": 2, "instruction": "Curl the fingertips of your guiding hand under, using your knuckles as a guide for the blade." },
-      { "number": 3, "instruction": "Angle the blade slightly toward you, the mirror of the usual right-handed advice, to keep your cutting line visible." },
-      { "number": 4, "instruction": "Look for a straight-edge chef's knife. Most work equally well for both hands, with no swap needed." }
+      { "number": 1, "instruction": "When cutting, always cut so the waste piece falls to the right of the blade — it keeps your view of the line clear." }
     ]
   },
   {
-    "id": "kitchen-can-opener",
-    "title": "Can Opener Technique",
-    "category": "Kitchen",
-    "icon": "cup.and.saucer.fill",
-    "summary": "Two easy ways around a right-handed-only can opener.",
+    "id": "tools-flip-right-handed-scissors",
+    "title": "Flip Right-Handed Scissors",
+    "category": "Tools & Accessories",
+    "icon": "arrow.up.arrow.down",
+    "summary": "If you only have right-handed scissors, flipping them upside down changes the blade orientation, even if the finger holes feel a little off.",
     "steps": [
-      { "number": 1, "instruction": "Try a left-handed can opener. Standard manual openers are built for right-handed turning; left-handed versions mirror the gear direction." },
-      { "number": 2, "instruction": "Or switch to an electric opener. It works the same regardless of which hand presses the button, removing the handedness problem entirely." },
-      { "number": 3, "instruction": "With a manual opener, grip the can with your right hand and let your dominant left hand control the turning mechanism for better leverage." }
+      { "number": 1, "instruction": "If you only have right-handed scissors, flipping them upside down changes the blade orientation, even if the finger holes feel a little off." }
     ]
   },
   {
-    "id": "instruments-guitar",
-    "title": "Guitar Basics for Lefties",
+    "id": "tools-cut-counter-clockwise",
+    "title": "Cut Counter-Clockwise",
+    "category": "Tools & Accessories",
+    "icon": "arrow.counterclockwise",
+    "summary": "Cut around shapes in an anti-clockwise direction — it keeps the piece you're cutting visible instead of hidden under the blades.",
+    "steps": [
+      { "number": 1, "instruction": "Cut around shapes in an anti-clockwise direction — it keeps the piece you're cutting visible instead of hidden under the blades." }
+    ]
+  },
+  {
+    "id": "tools-craft-knife-safety",
+    "title": "Craft Knife Safety",
+    "category": "Tools & Accessories",
+    "icon": "exclamationmark.triangle.fill",
+    "summary": "A retractable craft knife is pushed out with your thumb either way — a secure, non-slip grip matters more than which hand you use.",
+    "steps": [
+      { "number": 1, "instruction": "Craft knives with a retractable blade are pushed out using your thumb, so a left-handed grip should feel just as secure as a right-handed one — the key is a comfortable, non-slip grip rather than a knife \"made for\" either hand. Always use these with an adult around." }
+    ]
+  },
+  {
+    "id": "tools-left-handed-desks",
+    "title": "Left-Handed Desks",
+    "category": "Tools & Accessories",
+    "icon": "rectangle.on.rectangle",
+    "summary": "A proper left-handed desk has the writing surface attached on the left side, not just a flat desk — worth requesting at school if you're stuck with a right-handed one.",
+    "steps": [
+      { "number": 1, "instruction": "A proper left-handed desk has the writing surface attached on the left side, not just a flat desk — worth requesting at school if you're stuck with a right-handed one." }
+    ]
+  },
+  {
+    "id": "tools-computer-mice",
+    "title": "Computer Mice",
+    "category": "Tools & Accessories",
+    "icon": "cursorarrow",
+    "summary": "If the buttons feel backwards, your computer's settings let you swap the primary and secondary click in a couple of taps.",
+    "steps": [
+      { "number": 1, "instruction": "Standard mice work fine for most left-handers as-is, but if the buttons feel backwards, your computer's settings (usually under \"Mouse\" in system settings) let you swap the primary and secondary click to the other button in a couple of taps." }
+    ]
+  },
+  {
+    "id": "tools-winding-clocks-and-toys",
+    "title": "Winding Clocks & Toys",
+    "category": "Tools & Accessories",
+    "icon": "clock.fill",
+    "summary": "Wind-up toys and clocks are designed to be wound clockwise (a right-handed motion) — winding them the \"wrong\" way can actually damage the mechanism, so it takes some getting used to.",
+    "steps": [
+      { "number": 1, "instruction": "Wind-up toys and clocks are designed to be wound clockwise (a right-handed motion) — winding them the \"wrong\" way can actually damage the mechanism, so it takes some getting used to." }
+    ]
+  },
+  {
+    "id": "tools-ring-binder-placement",
+    "title": "Ring Binder Placement",
+    "category": "Tools & Accessories",
+    "icon": "book.fill",
+    "summary": "Ring binders and notebooks with rings on the left edge dig into your writing hand — look for ones with the rings at the top instead.",
+    "steps": [
+      { "number": 1, "instruction": "Ring binders and notebooks with rings on the left edge dig into your writing hand — look for ones with the rings at the top instead." }
+    ]
+  },
+  {
+    "id": "tools-power-tool-safety",
+    "title": "Power Tool Safety",
+    "category": "Tools & Accessories",
+    "icon": "exclamationmark.triangle.fill",
+    "summary": "Power tools often have safety switches and guards positioned for right-handed use, so extra care and a steady grip matter more if you ever use them.",
+    "steps": [
+      { "number": 1, "instruction": "Power tools often have safety switches and guards positioned for right-handed use, so extra care and a steady grip matter more if you ever use them." }
+    ]
+  },
+  {
+    "id": "tools-sitting-next-to-others",
+    "title": "Sitting Next to Others",
+    "category": "Tools & Accessories",
+    "icon": "person.2.fill",
+    "summary": "When sitting at a shared table or desk, sitting to the left of a right-handed person avoids constant elbow bumping for both of you.",
+    "steps": [
+      { "number": 1, "instruction": "When sitting at a shared table or desk, sitting to the left of a right-handed person avoids constant elbow bumping for both of you." }
+    ]
+  },
+  {
+    "id": "tools-learning-by-mirroring",
+    "title": "Learning by Mirroring",
+    "category": "Tools & Accessories",
+    "icon": "person.2.fill",
+    "summary": "Ask someone right-handed to sit facing you rather than beside you — their motions will naturally mirror what your left hand needs to do.",
+    "steps": [
+      { "number": 1, "instruction": "When someone right-handed is showing you how to do something new, ask them to sit facing you instead of next to you. Their hand motions will then appear as a mirror image of what your left hand needs to do, which is often much easier to copy than trying to translate \"left\" and \"right\" from an explanation." }
+    ]
+  },
+  {
+    "id": "tools-tying-shoelaces",
+    "title": "Tying Shoelaces",
+    "category": "Tools & Accessories",
+    "icon": "figure.walk",
+    "summary": "A simple 6-step method for tying a bow, left-handed.",
+    "steps": [
+      { "number": 1, "instruction": "Cross the left lace over the right, tuck it underneath, and pull both ends snug to make the base knot." },
+      { "number": 2, "instruction": "Fold the lace in your left hand into a loop and pinch the base of it between your finger and thumb." },
+      { "number": 3, "instruction": "Wrap the other lace around that loop." },
+      { "number": 4, "instruction": "Push the wrapped lace underneath itself to form a second loop." },
+      { "number": 5, "instruction": "Hold the new loop in one hand and the first loop in the other." },
+      { "number": 6, "instruction": "Pull both loops apart evenly to tighten the bow." }
+    ]
+  },
+  {
+    "id": "tools-reading-rulers",
+    "title": "Reading Rulers",
+    "category": "Tools & Accessories",
+    "icon": "ruler.fill",
+    "summary": "Rulers with numbers starting from the left edge only can be awkward to read left-handed — look for ones printed both directions.",
+    "steps": [
+      { "number": 1, "instruction": "Rulers with numbers starting from the left edge only can be awkward to read left-handed — look for ones printed both directions." }
+    ]
+  },
+  {
+    "id": "tools-handed-kitchen-gadgets",
+    "title": "Handed Kitchen Gadgets",
+    "category": "Tools & Accessories",
+    "icon": "wrench.and.screwdriver.fill",
+    "summary": "Can openers, pencil sharpeners, and vegetable peelers are also worth checking — a lot of \"gadget\" tools are handed even when they don't look like it.",
+    "steps": [
+      { "number": 1, "instruction": "Can openers, pencil sharpeners, and vegetable peelers are also worth checking — a lot of \"gadget\" tools are handed even when they don't look like it." }
+    ]
+  },
+  {
+    "id": "tools-wearing-watches",
+    "title": "Wearing Watches",
+    "category": "Tools & Accessories",
+    "icon": "clock.fill",
+    "summary": "Watches and other wrist accessories are usually made assuming a right-handed wearer — nothing wrong with wearing yours flipped if it's more comfortable.",
+    "steps": [
+      { "number": 1, "instruction": "Watches and other wrist accessories are usually made assuming a right-handed wearer — nothing wrong with wearing yours flipped if it's more comfortable." }
+    ]
+  },
+  {
+    "id": "tools-left-handed-keyboards",
+    "title": "Left-Handed Keyboards",
+    "category": "Tools & Accessories",
+    "icon": "keyboard.fill",
+    "summary": "A detachable number pad you place on your left is a cheaper fix than swapping a whole keyboard.",
+    "steps": [
+      { "number": 1, "instruction": "The number pad on most keyboards sits to the right, which can mean extra reaching and strain for a left-handed typist doing a lot of data entry. A detachable, separate number pad you can place on your left is a cheaper fix than swapping the whole keyboard." }
+    ]
+  },
+  {
+    "id": "sports-the-lefty-advantage",
+    "title": "The Lefty Advantage",
+    "category": "Sports",
+    "icon": "sportscourt.fill",
+    "summary": "In sports like tennis, fencing, and boxing, being left-handed can actually be an advantage since opponents are less used to your angle and timing.",
+    "steps": [
+      { "number": 1, "instruction": "In sports like tennis, fencing, and boxing, being left-handed can actually be an advantage since opponents are less used to your angle and timing." }
+    ]
+  },
+  {
+    "id": "sports-tell-your-coach-early",
+    "title": "Tell Your Coach Early",
+    "category": "Sports",
+    "icon": "figure.walk",
+    "summary": "Let your coach or instructor know you're left-handed early on, especially for sports like golf, cricket, or gymnastics where the standard teaching is right-handed.",
+    "steps": [
+      { "number": 1, "instruction": "Let your coach or instructor know you're left-handed early on, especially for sports like golf, cricket, or gymnastics where the standard teaching is right-handed." }
+    ]
+  },
+  {
+    "id": "sports-left-handed-gear",
+    "title": "Left-Handed Gear",
+    "category": "Sports",
+    "icon": "sportscourt.fill",
+    "summary": "Left-handed baseball gloves and cricket gear exist — using the correct gear instead of adapting right-handed gear makes a real difference.",
+    "steps": [
+      { "number": 1, "instruction": "Left-handed baseball gloves and cricket gear exist — using the correct gear instead of adapting right-handed gear makes a real difference." }
+    ]
+  },
+  {
+    "id": "sports-room-in-group-lessons",
+    "title": "Room in Group Lessons",
+    "category": "Sports",
+    "icon": "person.3.fill",
+    "summary": "In group sports lessons, try to stand or sit so your dominant side has room to move without bumping a right-handed teammate's elbow.",
+    "steps": [
+      { "number": 1, "instruction": "In group sports lessons, try to stand or sit so your dominant side has room to move without bumping a right-handed teammate's elbow." }
+    ]
+  },
+  {
+    "id": "instruments-guitar-options",
+    "title": "Guitar Options",
     "category": "Instruments",
     "icon": "music.note",
-    "summary": "Decide whether to restring left-handed or adapt to a standard guitar.",
+    "summary": "Most guitars are strung for right-handed players — you can learn the standard way, restring one for left-handed play, or flip a right-handed guitar upside down like Jimi Hendrix did.",
     "steps": [
-      { "number": 1, "instruction": "Decide early: restring a guitar left-handed by reversing the strings, or learn right-handed and simply fret with your left hand." },
-      { "number": 2, "instruction": "Try before you commit. Borrow or rent a left-handed guitar for a few weeks; a restrung guitar can feel different since the body shape stays right-handed." },
-      { "number": 3, "instruction": "Look for left-handed-specific lessons. Chord charts and finger positions are mirrored, so right-handed tutorials can be confusing without translation." },
-      { "number": 4, "instruction": "Give it time either way. Many left-handed guitarists play standard right-handed guitars comfortably, there's no single correct way." }
+      { "number": 1, "instruction": "Most guitars are strung for right-handed players — you can learn the standard way, restring one for left-handed play, or flip a right-handed guitar upside down like Jimi Hendrix did." }
     ]
   },
   {
-    "id": "crafts-knitting",
-    "title": "Knitting Cast-On",
-    "category": "Crafts",
-    "icon": "paintbrush.pointed.fill",
-    "summary": "Mirror the pattern and build the cast-on motion that feels natural to you.",
+    "id": "instruments-not-all-need-adapting",
+    "title": "Not All Instruments Need Adapting",
+    "category": "Instruments",
+    "icon": "music.note.list",
+    "summary": "Not all instruments need adapting — instruments played with both hands equally, like the clarinet, don't require a \"left-handed version.\"",
     "steps": [
-      { "number": 1, "instruction": "Mirror the pattern: hold your needles and yarn as the reflection of a right-handed diagram. What's their right hand is your left." },
-      { "number": 2, "instruction": "Or try knitting right-handed patterns exactly as shown, just using your left hand for the working needle, whichever feels more natural." },
-      { "number": 3, "instruction": "Watch mirrored video tutorials. Seeing the motion clicks faster than reading text instructions that describe hand swaps." },
-      { "number": 4, "instruction": "Practice the cast-on slowly. Loop the yarn over your thumb and pointer finger the way that feels most natural, then adjust tension once the motion feels comfortable." }
+      { "number": 1, "instruction": "Not all instruments need adapting — instruments played with both hands equally, like the clarinet, don't require a \"left-handed version.\"" }
     ]
   },
   {
-    "id": "crafts-crochet",
-    "title": "Crochet Basics",
-    "category": "Crafts",
-    "icon": "circle.grid.3x3.fill",
-    "summary": "Hook grip, yarn tension, and turning direction for left-handed crochet.",
+    "id": "instruments-restrung-guitar-long-term",
+    "title": "Restrung Guitar, Long Term",
+    "category": "Instruments",
+    "icon": "music.note",
+    "summary": "If you're serious about guitar, a properly restrung left-handed model will feel more natural long-term than constantly adapting to a right-handed one.",
     "steps": [
-      { "number": 1, "instruction": "Hold the hook in your left hand, gripped like a pencil or like a knife, whichever feels more natural to you." },
-      { "number": 2, "instruction": "Let yarn tension flow through your right hand. Most tensioning techniques transfer directly since the yarn hand rarely needs to mirror the hook hand." },
-      { "number": 3, "instruction": "Turn your work the opposite way. When a pattern says turn clockwise, you'll likely turn counter-clockwise to keep your stitches even." },
-      { "number": 4, "instruction": "Follow video tutorials over diagrams. Diagrams are usually drawn for right-handed crocheters and are easy to mirror incorrectly." }
+      { "number": 1, "instruction": "If you're serious about guitar, a properly restrung left-handed model will feel more natural long-term than constantly adapting to a right-handed one." }
     ]
   },
   {
-    "id": "crafts-knots",
-    "title": "Tying Knots",
-    "category": "Crafts",
-    "icon": "link",
-    "summary": "The mirror motion that makes common knots easy with your left hand.",
+    "id": "instruments-piano-and-drums",
+    "title": "Piano, Drums & Hand Independence",
+    "category": "Instruments",
+    "icon": "pianokeys",
+    "summary": "For piano, drums, and most orchestral instruments, hand dominance matters much less since both hands are trained separately from the start.",
     "steps": [
-      { "number": 1, "instruction": "Learn the mirror motion once. Most knots, like a bowline or shoelace knot, work identically left-handed; only the starting hand changes." },
-      { "number": 2, "instruction": "Practice with thicker rope first. It's easier to see and control while you're building new muscle memory." },
-      { "number": 3, "instruction": "Go slow before you go fast. Tie the knot slowly a few times before trying to speed up, rushing early builds the wrong habit." }
+      { "number": 1, "instruction": "For piano, drums, and most orchestral instruments, hand dominance matters much less since both hands are trained separately from the start." }
+    ]
+  },
+  {
+    "id": "kitchen-left-handed-can-openers",
+    "title": "Left-Handed Can Openers",
+    "category": "Kitchen",
+    "icon": "gearshape.fill",
+    "summary": "A left-handed opener lets your stronger left hand do the turning while your right hand steadies the can, safer near the sharp edge.",
+    "steps": [
+      { "number": 1, "instruction": "A right-handed can opener forces you to either reach awkwardly across your body or turn the handle with your weaker hand. A left-handed opener flips this around, so your stronger left hand does the turning while your right hand steadies the can — much safer near a sharp edge." }
+    ]
+  },
+  {
+    "id": "kitchen-vegetable-peelers",
+    "title": "Vegetable Peelers",
+    "category": "Kitchen",
+    "icon": "leaf.fill",
+    "summary": "The safest motion is pulling the peeler toward you while your thumb braces the fruit — a right-handed peeler in your left hand faces the wrong way for this.",
+    "steps": [
+      { "number": 1, "instruction": "The safest peeling motion is to pull the peeler toward you, bracing the fruit or vegetable with your thumb. A right-handed peeler held in your left hand has the blade facing the wrong way for this, so peeling ends up pushed away from the body instead, which gives much less control. A left-handed or double-edged peeler fixes this." }
+    ]
+  },
+  {
+    "id": "kitchen-bread-knives",
+    "title": "Bread Knives",
+    "category": "Kitchen",
+    "icon": "fork.knife",
+    "summary": "Standard serrations straighten a right-hander's twist as they saw — in a left hand they exaggerate it instead, curving the slice.",
+    "steps": [
+      { "number": 1, "instruction": "Most bread knives are serrated on the side that straightens out a right-hander's natural inward twist as they saw. Held in a left hand, those same serrations exaggerate the twist instead, curving the slice — a symmetrical or reverse-serrated bread knife saws straight for a lefty." }
+    ]
+  },
+  {
+    "id": "kitchen-taps-jars-lids",
+    "title": "Opening Jars, Taps & Lids",
+    "category": "Kitchen",
+    "icon": "arrow.counterclockwise",
+    "summary": "Turning counter-clockwise is a naturally stronger motion for a left hand — that's why jars often feel easier to open than to close.",
+    "steps": [
+      { "number": 1, "instruction": "Turning something counter-clockwise is a naturally stronger, more controlled motion for a left hand than turning clockwise. That's why jars, bottle tops, and taps often feel easier to open than to close — it's not just in your head." }
+    ]
+  },
+  {
+    "id": "kitchen-wooden-spoons",
+    "title": "Wooden Spoons & Spatulas",
+    "category": "Kitchen",
+    "icon": "fork.knife",
+    "summary": "Straight wooden spoons and most spatulas are naturally ambidextrous, so you don't need a special version of everything in the kitchen.",
+    "steps": [
+      { "number": 1, "instruction": "Straight wooden spoons and most spatulas are naturally ambidextrous, so you don't need a special version of everything in the kitchen." }
+    ]
+  },
+  {
+    "id": "kitchen-measuring-cups",
+    "title": "Measuring Cups & Jugs",
+    "category": "Kitchen",
+    "icon": "ruler.fill",
+    "summary": "Measuring cups and jugs with the markings only on one side can be hard to read left-handed — look for ones with markings on both sides.",
+    "steps": [
+      { "number": 1, "instruction": "Measuring cups and jugs with the markings only on one side can be hard to read left-handed — look for ones with markings on both sides." }
     ]
   }
 ]

@@ -1,12 +1,12 @@
 enum AppTab: CaseIterable {
-    case home, learn, teach, practice, myLefty
+    case home, learn, teach, settings, myLefty
 
     var title: String {
         switch self {
         case .home: "Home"
         case .learn: "Learn"
         case .teach: "Teach"
-        case .practice: "Practice"
+        case .settings: "Settings"
         case .myLefty: "My Lefty"
         }
     }
@@ -16,7 +16,7 @@ enum AppTab: CaseIterable {
         case .home: "house.fill"
         case .learn: "book.fill"
         case .teach: "plus.circle.fill"
-        case .practice: "pencil.and.scribble"
+        case .settings: "gearshape.fill"
         case .myLefty: "person.crop.circle.fill"
         }
     }

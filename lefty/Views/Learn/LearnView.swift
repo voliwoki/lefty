@@ -1,24 +1,23 @@
 import SwiftUI
 
 struct LearnView: View {
-    @State private var selectedCategory: LearnCategory?
-
-    private var filteredGuides: [GuideDocument] {
-        guard let selectedCategory else { return LearnContentLoader.guides }
-        return LearnContentLoader.guides.filter { $0.category == selectedCategory }
-    }
-
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: AppSpacing.lg) {
-                    categoryRow
-                    guideList
+            VStack(spacing: AppSpacing.md) {
+                ForEach(LearnCategory.allCases) { category in
+                    NavigationLink(value: category) {
+                        categoryRow(category)
+                    }
+                    .buttonStyle(.plain)
                 }
-                .padding(AppSpacing.lg)
             }
+            .padding(AppSpacing.lg)
+            .frame(maxHeight: .infinity)
             .background(AppColors.background)
             .navigationTitle("Learn")
+            .navigationDestination(for: LearnCategory.self) { category in
+                LearnCategoryDetailView(category: category)
+            }
             .navigationDestination(for: String.self) { guideId in
                 if let guide = LearnContentLoader.guides.first(where: { $0.id == guideId }) {
                     GuideDetailView(guide: guide)
@@ -27,35 +26,28 @@ struct LearnView: View {
         }
     }
 
-    private var categoryRow: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: AppSpacing.sm) {
-                categoryChip(nil, title: "All")
-                ForEach(LearnCategory.allCases) { category in
-                    categoryChip(category, title: category.rawValue)
-                }
+    private func categoryRow(_ category: LearnCategory) -> some View {
+        HStack(spacing: AppSpacing.md) {
+            LeftyIconBadge(systemImage: category.icon, tone: category.tone, size: 56)
+            VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                Text(category.rawValue)
+                    .font(AppFont.title)
+                    .foregroundStyle(AppColors.primaryText)
+                Text("\(tipCount(for: category)) tips")
+                    .font(AppFont.subheadline)
+                    .foregroundStyle(AppColors.secondaryText)
             }
+            Spacer(minLength: 0)
+            Image(systemName: "chevron.right")
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(AppColors.secondaryText)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .leftyCard()
     }
 
-    private func categoryChip(_ category: LearnCategory?, title: String) -> some View {
-        Button {
-            selectedCategory = category
-        } label: {
-            LeftyChip(title: title, tone: category?.tone ?? .purple, isSelected: selectedCategory == category)
-        }
-        .buttonStyle(.plain)
-    }
-
-    private var guideList: some View {
-        LazyVStack(spacing: AppSpacing.md) {
-            ForEach(filteredGuides) { guide in
-                NavigationLink(value: guide.id) {
-                    GuideRow(guide: guide)
-                }
-                .buttonStyle(.plain)
-            }
-        }
+    private func tipCount(for category: LearnCategory) -> Int {
+        LearnContentLoader.guides.filter { $0.category == category }.count
     }
 }
 
