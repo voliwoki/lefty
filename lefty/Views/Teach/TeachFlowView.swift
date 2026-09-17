@@ -4,6 +4,7 @@ import SwiftData
 private enum TeachPhase {
     case input
     case processing
+    case declined
     case overview
     case steps
     case completion
@@ -63,6 +64,10 @@ struct TeachFlowView: View {
             )
         case .processing:
             TeachProcessingPhaseView()
+        case .declined:
+            if let generatedGuide {
+                TeachDeclinedPhaseView(guide: generatedGuide, onTryAgain: { phase = .input })
+            }
         case .overview:
             if let generatedGuide {
                 TeachOverviewPhaseView(guide: generatedGuide, onStart: { phase = .steps })
@@ -86,7 +91,12 @@ struct TeachFlowView: View {
                     image: selectedImage
                 )
                 generatedGuide = guide
-                phase = .overview
+                switch guide.confidence {
+                case .needMoreInfo, .unsafe:
+                    phase = .declined
+                case .high, .uncertain:
+                    phase = .overview
+                }
             } catch {
                 errorMessage = (error as? LocalizedError)?.errorDescription
                     ?? String(localized: "Something went wrong. Try again.")

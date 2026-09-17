@@ -22,6 +22,19 @@ struct TeachOverviewPhaseView: View {
                     .font(AppFont.body)
                     .foregroundStyle(AppColors.secondaryText)
 
+                if guide.confidence == .uncertain {
+                    HStack(alignment: .top, spacing: AppSpacing.sm) {
+                        Image(systemName: "questionmark.circle.fill")
+                            .foregroundStyle(AppColors.chipYellowFg)
+                        Text("Lefty isn't fully sure about this one — double check as you go.")
+                            .font(AppFont.subheadline)
+                            .foregroundStyle(AppColors.primaryText)
+                    }
+                    .padding(AppSpacing.md)
+                    .background(AppColors.chipYellowBg)
+                    .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
+                }
+
                 if let safetyNote = guide.safetyNote {
                     HStack(alignment: .top, spacing: AppSpacing.sm) {
                         Image(systemName: "exclamationmark.triangle.fill")

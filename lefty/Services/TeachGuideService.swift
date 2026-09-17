@@ -11,7 +11,11 @@ struct StubTeachGuideService: TeachGuideService {
 
         let lowercased = text.lowercased()
 
-        if lowercased.contains("scissor") {
+        if lowercased.contains("unclear") || lowercased.contains("confus") {
+            return .needMoreInfoExample
+        } else if lowercased.contains("danger") || lowercased.contains("unsafe") || lowercased.contains("firework") {
+            return .unsafeExample
+        } else if lowercased.contains("scissor") {
             return .scissorsExample
         } else if lowercased.contains("guitar") {
             return .guitarExample
@@ -28,6 +32,30 @@ struct StubTeachGuideService: TeachGuideService {
 }
 
 private extension GeneratedGuide {
+    static let needMoreInfoExample = GeneratedGuide(
+        title: "Need a clearer look",
+        estimatedMinutes: nil,
+        summary: "",
+        whatChanges: "",
+        whatStaysSame: "",
+        confidence: .needMoreInfo,
+        clarifyingQuestion: "Could you take a clearer photo of the full instructions, or describe the task in a sentence or two?",
+        steps: [],
+        safetyNote: nil
+    )
+
+    static let unsafeExample = GeneratedGuide(
+        title: "Let's not do this one alone",
+        estimatedMinutes: nil,
+        summary: "",
+        whatChanges: "",
+        whatStaysSame: "",
+        confidence: .unsafe,
+        clarifyingQuestion: nil,
+        steps: [],
+        safetyNote: "This looks like it could involve real danger (like fire, sharp power tools, or heights). Please get help from an adult or a professional instead of following steps from an app."
+    )
+
     static let scissorsExample = GeneratedGuide(
         title: "Left-Handed Scissors",
         estimatedMinutes: 3,

@@ -1,22 +1,25 @@
 import SwiftUI
 
 struct HomeView: View {
-    let onTeachTapped: () -> Void
-    let onBrowseLearnTapped: () -> Void
+    private var fact: String {
+        let index = DailyContent.todayIndex(poolSize: FunFactPool.facts.count)
+        return FunFactPool.facts[index]
+    }
 
-    @State private var tip = LeftyTipPool.tips.randomElement() ?? LeftyTipPool.tips[0]
+    private var famousLefty: FamousLefty {
+        let index = DailyContent.todayIndex(poolSize: FamousLeftyPool.people.count)
+        return FamousLeftyPool.people[index]
+    }
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: AppSpacing.xl) {
-                    header
-                    heroCard
-                    popularGuidesSection
-                    tipCard
-                }
-                .padding(AppSpacing.lg)
+            VStack(alignment: .leading, spacing: AppSpacing.lg) {
+                header
+                funFactCard
+                famousLeftyCard
             }
+            .padding(AppSpacing.lg)
+            .frame(maxHeight: .infinity)
             .background(AppColors.background)
             .toolbar(.hidden)
         }
@@ -38,73 +41,66 @@ struct HomeView: View {
         .accessibilityLabel("Lefty")
     }
 
-    private var heroCard: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.md) {
-            Text("What do you want to learn?")
-                .font(AppFont.title)
-                .foregroundStyle(AppColors.primaryText)
-            Text("Show Lefty a photo, an upload, or just type it in.")
-                .font(AppFont.subheadline)
-                .foregroundStyle(AppColors.secondaryText)
-            LeftyActionBar(
-                primaryTitle: "Teach me left-handed",
-                primaryIcon: "hand.point.up.left.fill",
-                primaryAction: onTeachTapped
-            )
-        }
-        .leftyCard()
-    }
-
-    private var popularGuidesSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.md) {
-            Text("Popular Lefty Guides")
-                .font(AppFont.headline)
-                .foregroundStyle(AppColors.primaryText)
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: AppSpacing.md) {
-                    ForEach(PopularGuideStub.samples) { guide in
-                        guideCard(guide)
-                    }
-                }
-            }
-        }
-    }
-
-    private func guideCard(_ guide: PopularGuideStub) -> some View {
-        Button(action: onBrowseLearnTapped) {
-            VStack(alignment: .leading, spacing: AppSpacing.sm) {
-                LeftyIconBadge(systemImage: guide.icon, tone: guide.tone)
-                Text(guide.title)
-                    .font(AppFont.subheadlineEmphasized)
-                    .foregroundStyle(AppColors.primaryText)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(2)
-            }
-            .frame(width: 140, alignment: .leading)
-            .padding(AppSpacing.md)
-            .frame(minHeight: 44)
-        }
-        .background(AppColors.surface)
-        .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
-        .buttonStyle(.plain)
-    }
-
-    private var tipCard: some View {
+    private var funFactCard: some View {
         HStack(alignment: .top, spacing: AppSpacing.md) {
             LeftyIconBadge(systemImage: "lightbulb.fill", tone: .yellow)
             VStack(alignment: .leading, spacing: AppSpacing.xs) {
-                Text("Quick Lefty Tip")
+                Text("Fun Fact of the Day")
                     .font(AppFont.headline)
                     .foregroundStyle(AppColors.primaryText)
-                Text(tip)
+                Text(fact)
                     .font(AppFont.body)
                     .foregroundStyle(AppColors.secondaryText)
             }
         }
         .leftyCard()
     }
+
+    private var famousLeftyCard: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: AppSpacing.md) {
+                Text("Famous Lefty of the Day")
+                    .font(AppFont.headline)
+                    .foregroundStyle(AppColors.primaryText)
+
+                HStack(spacing: AppSpacing.md) {
+                    LeftyIconBadge(systemImage: famousLefty.icon, tone: .purple, size: 56)
+                    VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                        Text(famousLefty.name)
+                            .font(AppFont.title)
+                            .foregroundStyle(AppColors.primaryText)
+                        Text("\(famousLefty.field) · b. \(famousLefty.bornYear)")
+                            .font(AppFont.caption)
+                            .foregroundStyle(AppColors.secondaryText)
+                    }
+                }
+
+                Text(famousLefty.blurb)
+                    .font(AppFont.body)
+                    .foregroundStyle(AppColors.secondaryText)
+
+                VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                    Text("Did you know?")
+                        .font(AppFont.subheadlineEmphasized)
+                        .foregroundStyle(AppColors.primaryText)
+                    Text(famousLefty.didYouKnow)
+                        .font(AppFont.subheadline)
+                        .foregroundStyle(AppColors.secondaryText)
+                }
+                .padding(AppSpacing.md)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(AppColors.chipPurpleBg)
+                .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
+
+                Spacer(minLength: 0)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .leftyCard()
+    }
 }
 
 #Preview {
-    HomeView(onTeachTapped: {}, onBrowseLearnTapped: {})
+    HomeView()
 }

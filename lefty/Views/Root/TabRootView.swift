@@ -12,12 +12,9 @@ struct TabRootView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            HomeView(
-                onTeachTapped: { isTeachPresented = true },
-                onBrowseLearnTapped: { selectedTab = .learn }
-            )
-            .tabItem { Label(AppTab.home.title, systemImage: AppTab.home.icon) }
-            .tag(AppTab.home)
+            HomeView()
+                .tabItem { Label(AppTab.home.title, systemImage: AppTab.home.icon) }
+                .tag(AppTab.home)
 
             LearnView()
                 .tabItem { Label(AppTab.learn.title, systemImage: AppTab.learn.icon) }
