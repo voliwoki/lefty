@@ -13,6 +13,7 @@ private enum TeachPhase {
 struct TeachFlowView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @Environment(SubscriptionService.self) private var subscription
 
     private let guideService: TeachGuideService
 
@@ -22,6 +23,7 @@ struct TeachFlowView: View {
     @State private var generatedGuide: GeneratedGuide?
     @State private var isSaved = false
     @State private var errorMessage: String?
+    @State private var isPaywallPresented = false
 
     init(guideService: TeachGuideService = TeachGuideServiceFactory.make()) {
         self.guideService = guideService
@@ -49,6 +51,9 @@ struct TeachFlowView: View {
                     }
                 } message: {
                     Text(errorMessage ?? "")
+                }
+                .sheet(isPresented: $isPaywallPresented) {
+                    PaywallSheet()
                 }
         }
     }
@@ -82,6 +87,11 @@ struct TeachFlowView: View {
     }
 
     private func generate() {
+        guard TeachUsageStore.canStartConversion(isLeftyPlusActive: subscription.isLeftyPlusActive) else {
+            isPaywallPresented = true
+            return
+        }
+
         phase = .processing
         errorMessage = nil
         Task {
@@ -95,6 +105,7 @@ struct TeachFlowView: View {
                 case .needMoreInfo, .unsafe:
                     phase = .declined
                 case .high, .uncertain:
+                    TeachUsageStore.recordSuccessfulConversion(isLeftyPlusActive: subscription.isLeftyPlusActive)
                     phase = .overview
                 }
             } catch {
@@ -114,5 +125,6 @@ struct TeachFlowView: View {
 
 #Preview {
     TeachFlowView(guideService: StubTeachGuideService())
+        .environment(SubscriptionService())
         .modelContainer(for: SavedGuide.self, inMemory: true)
 }

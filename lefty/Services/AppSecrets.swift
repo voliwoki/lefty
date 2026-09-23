@@ -6,6 +6,22 @@ enum AppSecrets {
         let leftyAppSecret: String
     }
 
+    /// Public RevenueCat SDK key (Test Store for Shipaton). Prefer Secrets.plist override.
+    static var revenueCatAPIKey: String {
+        if
+            let url = Bundle.main.url(forResource: "Secrets", withExtension: "plist"),
+            let data = try? Data(contentsOf: url),
+            let plist = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any],
+            let key = plist["RevenueCatAPIKey"] as? String,
+            !key.isEmpty,
+            !key.hasPrefix("REPLACE")
+        {
+            return key
+        }
+        // Test Store public key — safe for client; swap for appl_ when App Store ships.
+        return "test_FpNSeORiadRrKIrxPpXNcVcZjuS"
+    }
+
     static var current: Values? {
         guard
             let url = Bundle.main.url(forResource: "Secrets", withExtension: "plist"),

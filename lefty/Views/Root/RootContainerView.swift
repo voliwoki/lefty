@@ -1,16 +1,23 @@
 import SwiftUI
 
 struct RootContainerView: View {
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @State private var showSplash = true
     @State private var logoVisible = false
 
     var body: some View {
         ZStack {
-            TabRootView()
+            if hasCompletedOnboarding {
+                TabRootView()
+            } else if !showSplash {
+                OnboardingFlowView(hasCompletedOnboarding: $hasCompletedOnboarding)
+                    .transition(.opacity)
+            }
 
             if showSplash {
                 SplashView(logoVisible: logoVisible)
                     .transition(.opacity)
+                    .zIndex(1)
             }
         }
         .task {
@@ -45,6 +52,17 @@ private struct SplashView: View {
     }
 }
 
-#Preview {
+#Preview("First launch") {
     RootContainerView()
+        .environment(SubscriptionService())
+}
+
+#Preview("Returning") {
+    RootContainerView()
+        .environment(SubscriptionService())
+        .defaultAppStorage({
+            let defaults = UserDefaults(suiteName: "preview.returning")!
+            defaults.set(true, forKey: "hasCompletedOnboarding")
+            return defaults
+        }())
 }
