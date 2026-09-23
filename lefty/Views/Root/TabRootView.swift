@@ -2,7 +2,6 @@ import SwiftUI
 
 struct TabRootView: View {
     @State private var selectedTab: AppTab = .home
-    @State private var previousTab: AppTab = .home
     @State private var isTeachPresented = false
     @AppStorage("appearancePreference") private var appearanceRawValue: String = AppAppearance.system.rawValue
 
@@ -10,8 +9,21 @@ struct TabRootView: View {
         AppAppearance(rawValue: appearanceRawValue) ?? .system
     }
 
+    private var tabSelection: Binding<AppTab> {
+        Binding(
+            get: { selectedTab },
+            set: { newValue in
+                if newValue == .teach {
+                    isTeachPresented = true
+                } else {
+                    selectedTab = newValue
+                }
+            }
+        )
+    }
+
     var body: some View {
-        TabView(selection: $selectedTab) {
+        TabView(selection: tabSelection) {
             HomeView()
                 .tabItem { Label(AppTab.home.title, systemImage: AppTab.home.icon) }
                 .tag(AppTab.home)
@@ -33,18 +45,11 @@ struct TabRootView: View {
                 .tag(AppTab.myLefty)
         }
         .tint(AppColors.accent)
-        .onChange(of: selectedTab) { _, newValue in
-            if newValue == .teach {
-                isTeachPresented = true
-                selectedTab = previousTab
-            } else {
-                previousTab = newValue
-            }
-        }
         .sheet(isPresented: $isTeachPresented) {
             TeachFlowView()
         }
         .preferredColorScheme(appearance.colorScheme)
+        .animation(.easeInOut(duration: 0.3), value: appearanceRawValue)
     }
 }
 

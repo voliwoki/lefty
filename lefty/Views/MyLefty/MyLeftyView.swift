@@ -77,7 +77,7 @@ struct MyLeftyView: View {
                     NavigationLink(value: guide) {
                         savedGuideRow(guide)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.pressScale)
                 }
             }
         }
@@ -109,7 +109,7 @@ struct MyLeftyView: View {
                     NavigationLink(value: guide.id) {
                         GuideRow(guide: guide)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.pressScale)
                 }
             }
         }

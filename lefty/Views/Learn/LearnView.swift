@@ -8,7 +8,7 @@ struct LearnView: View {
                     NavigationLink(value: category) {
                         categoryRow(category)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.pressScale)
                 }
             }
             .padding(AppSpacing.lg)

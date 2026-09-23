@@ -5,6 +5,7 @@ struct TeachStepsPhaseView: View {
     let onComplete: () -> Void
 
     @State private var stepIndex = 0
+    @State private var goingForward = true
 
     private var currentStep: GuideStep { guide.steps[stepIndex] }
     private var isFirstStep: Bool { stepIndex == 0 }
@@ -21,16 +22,36 @@ struct TeachStepsPhaseView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: AppSpacing.sm) {
-                Text("Step \(stepIndex + 1) of \(guide.steps.count)")
-                    .font(AppFont.caption)
-                    .foregroundStyle(AppColors.secondaryText)
-                Text(currentStep.instruction)
-                    .font(AppFont.title)
-                    .foregroundStyle(AppColors.primaryText)
+            VStack(spacing: AppSpacing.xl) {
+                StepProgressDots(total: guide.steps.count, currentIndex: stepIndex)
+                    .padding(.top, AppSpacing.lg)
+
+                VStack(spacing: AppSpacing.lg) {
+                    ZStack {
+                        Circle()
+                            .fill(AppColors.chipPurpleBg)
+                            .frame(width: 56, height: 56)
+                        Text("\(stepIndex + 1)")
+                            .font(.system(size: 24, weight: .bold, design: .rounded))
+                            .foregroundStyle(AppColors.chipPurpleFg)
+                    }
+                    .accessibilityHidden(true)
+
+                    Text(currentStep.instruction)
+                        .font(AppFont.largeTitle)
+                        .multilineTextAlignment(.center)
+                        .foregroundStyle(AppColors.primaryText)
+                }
+                .id(stepIndex)
+                .transition(.asymmetric(
+                    insertion: .move(edge: goingForward ? .trailing : .leading).combined(with: .opacity),
+                    removal: .move(edge: goingForward ? .leading : .trailing).combined(with: .opacity)
+                ))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, AppSpacing.xxl)
+                .leftyCard(padding: AppSpacing.xl)
             }
             .padding(AppSpacing.lg)
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .background(AppColors.background)
         .safeAreaInset(edge: .bottom) {
@@ -49,11 +70,17 @@ struct TeachStepsPhaseView: View {
         if isLastStep {
             onComplete()
         } else {
-            stepIndex += 1
+            goingForward = true
+            withAnimation(.easeInOut(duration: 0.25)) {
+                stepIndex += 1
+            }
         }
     }
 
     private func goBack() {
-        stepIndex = max(0, stepIndex - 1)
+        goingForward = false
+        withAnimation(.easeInOut(duration: 0.25)) {
+            stepIndex = max(0, stepIndex - 1)
+        }
     }
 }

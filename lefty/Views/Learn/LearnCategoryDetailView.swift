@@ -14,7 +14,7 @@ struct LearnCategoryDetailView: View {
                     NavigationLink(value: guide.id) {
                         GuideRow(guide: guide)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.pressScale)
                 }
             }
             .padding(AppSpacing.lg)

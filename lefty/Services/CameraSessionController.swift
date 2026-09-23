@@ -60,6 +60,7 @@ actor CaptureSessionEngine {
         setTorch(enabled: false)
     }
 
+    @discardableResult
     func setTorch(enabled: Bool) -> Bool {
         guard
             let device = deviceInput?.device,

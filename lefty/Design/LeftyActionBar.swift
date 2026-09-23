@@ -48,7 +48,7 @@ struct LeftyIconButton: View {
                 .font(.system(size: 18, weight: .semibold))
                 .frame(width: 44, height: 44)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.pressScale)
         .foregroundStyle(AppColors.primaryText)
         .accessibilityLabel(accessibilityLabel)
     }

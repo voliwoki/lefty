@@ -27,11 +27,8 @@ struct HomeView: View {
 
     private var header: some View {
         HStack(spacing: AppSpacing.sm) {
-            Image(systemName: "hand.wave.fill")
-                .scaleEffect(x: -1, y: 1)
-                .foregroundStyle(AppColors.brandPurple)
-                .accessibilityHidden(true)
-            Text("Lefty")
+            HandDrawnHandIcon(size: 28)
+            Text("lefty")
                 .font(AppFont.logo(size: 36))
                 .foregroundStyle(AppColors.brandPurple)
                 .leftLean()

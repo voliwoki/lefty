@@ -13,6 +13,12 @@ struct TeachInputPhaseView: View {
         selectedImage != nil || !typedText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
+    private var textSectionTitle: String {
+        selectedImage != nil
+            ? String(localized: "Add more detail (optional)")
+            : String(localized: "Or type it in")
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: AppSpacing.xl) {
@@ -27,14 +33,19 @@ struct TeachInputPhaseView: View {
 
                 if let selectedImage {
                     selectedPhotoCard(selectedImage)
+                } else {
+                    inputOptionsRow
                 }
 
-                inputOptionsRow
-
                 VStack(alignment: .leading, spacing: AppSpacing.sm) {
-                    Text(String(localized: "Or type it in"))
+                    Text(textSectionTitle)
                         .font(AppFont.headline)
                         .foregroundStyle(AppColors.primaryText)
+                    if selectedImage != nil {
+                        Text(String(localized: "Anything the photo doesn't show — like what you're trying to do, or a question about it."))
+                            .font(AppFont.caption)
+                            .foregroundStyle(AppColors.secondaryText)
+                    }
                     TextEditor(text: $typedText)
                         .font(AppFont.body)
                         .frame(minHeight: 100)
@@ -79,14 +90,14 @@ struct TeachInputPhaseView: View {
             } label: {
                 cameraHeroCard
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.pressScale)
             .accessibilityLabel(String(localized: "Camera"))
             .accessibilityHint(String(localized: "Photograph instructions or a diagram"))
 
             PhotosPicker(selection: $photosPickerItem, matching: .images) {
                 uploadCard
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.pressScale)
             .accessibilityLabel(String(localized: "Upload"))
             .accessibilityHint(String(localized: "Choose a photo from your library"))
         }

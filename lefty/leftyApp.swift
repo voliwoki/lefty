@@ -16,7 +16,7 @@ struct leftyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            TabRootView()
+            RootContainerView()
         }
         .modelContainer(for: [FavoriteGuide.self, SavedGuide.self])
     }

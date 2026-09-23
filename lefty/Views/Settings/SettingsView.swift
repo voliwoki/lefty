@@ -30,39 +30,13 @@ struct SettingsView: View {
             Text("Appearance")
                 .font(AppFont.headline)
                 .foregroundStyle(AppColors.primaryText)
-            VStack(spacing: 0) {
-                ForEach(AppAppearance.allCases) { option in
-                    appearanceRow(option)
-                    if option != AppAppearance.allCases.last {
-                        Divider()
-                    }
-                }
-            }
-            .background(AppColors.surface)
-            .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
+            AppearanceSlider(
+                selection: Binding(
+                    get: { selectedAppearance },
+                    set: { appearanceRawValue = $0.rawValue }
+                )
+            )
         }
-    }
-
-    private func appearanceRow(_ option: AppAppearance) -> some View {
-        Button {
-            appearanceRawValue = option.rawValue
-        } label: {
-            HStack {
-                Text(option.label)
-                    .font(AppFont.body)
-                    .foregroundStyle(AppColors.primaryText)
-                Spacer()
-                if selectedAppearance == option {
-                    Image(systemName: "checkmark")
-                        .foregroundStyle(AppColors.accent)
-                }
-            }
-            .padding(AppSpacing.md)
-            .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityAddTraits(selectedAppearance == option ? .isSelected : [])
     }
 
     private var aboutSection: some View {
@@ -85,6 +59,47 @@ struct SettingsView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .leftyCard()
         }
+    }
+}
+
+private struct AppearanceSlider: View {
+    @Binding var selection: AppAppearance
+    @Namespace private var namespace
+    @State private var displayedSelection: AppAppearance
+
+    init(selection: Binding<AppAppearance>) {
+        self._selection = selection
+        self._displayedSelection = State(initialValue: selection.wrappedValue)
+    }
+
+    var body: some View {
+        HStack(spacing: 4) {
+            ForEach(AppAppearance.allCases) { option in
+                Text(option.label)
+                    .font(AppFont.subheadlineEmphasized)
+                    .foregroundStyle(displayedSelection == option ? .white : AppColors.secondaryText)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, AppSpacing.sm)
+                    .background {
+                        if displayedSelection == option {
+                            Capsule()
+                                .fill(AppColors.accent)
+                                .matchedGeometryEffect(id: "selection", in: namespace)
+                        }
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
+                            displayedSelection = option
+                        }
+                        selection = option
+                    }
+                    .accessibilityAddTraits(displayedSelection == option ? .isSelected : [])
+            }
+        }
+        .padding(4)
+        .background(AppColors.surface)
+        .clipShape(Capsule())
     }
 }
 
