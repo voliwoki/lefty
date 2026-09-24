@@ -41,7 +41,7 @@ Without `Secrets.plist`, DEBUG builds fall back to the stub guide service so the
 - **Debug (Xcode):** Test Store key (`test_…`) — fake purchase dialog, no App Store Connect needed
 - **TestFlight / Release:** App Store key (`appl_…`) — **required**; RevenueCat intentionally crashes if a `test_` key is used in Release
 
-Entitlement: `lefty_plus` · Packages: **$5/month** · **$39/year** · Free: **3 Teach conversions / month**
+Entitlement: `lefty_plus` · Packages: **$4.99/month** · **$39.99/year** · Free: **3 Teach conversions / month**
 
 Dashboard: https://app.revenuecat.com/projects/24f924fc
 

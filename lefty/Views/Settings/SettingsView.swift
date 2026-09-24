@@ -48,7 +48,7 @@ struct SettingsView: View {
                             .foregroundStyle(AppColors.primaryText)
                         Text(subscription.isLeftyPlusActive
                              ? String(localized: "Unlimited conversions and full library access.")
-                             : String(localized: "$5/month or $39/year. Free: 3 Teach conversions each month."))
+                             : String(localized: "$4.99/month or $39.99/year. Free: 3 Teach conversions each month."))
                             .font(AppFont.subheadline)
                             .foregroundStyle(AppColors.secondaryText)
                     }
