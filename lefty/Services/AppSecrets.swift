@@ -6,9 +6,9 @@ enum AppSecrets {
         let leftyAppSecret: String
     }
 
-    /// Public RevenueCat SDK key.
-    /// - Debug: Test Store (`test_…`) for simulator / Xcode runs
-    /// - Release/TestFlight: App Store (`appl_…`) — Test Store keys intentionally crash Release builds
+    /// App Store public SDK key only. Never use RevenueCat Test Store (`test_…`) keys.
+    static let appStoreAPIKey = "appl_rPWOgfnUTFvBsOyZQAWyjbywbIM"
+
     static var revenueCatAPIKey: String {
         if
             let url = Bundle.main.url(forResource: "Secrets", withExtension: "plist"),
@@ -17,25 +17,11 @@ enum AppSecrets {
             let key = plist["RevenueCatAPIKey"] as? String,
             !key.isEmpty,
             !key.hasPrefix("REPLACE"),
-            isKeyAllowedInThisBuild(key)
+            !key.hasPrefix("test_")
         {
             return key
         }
-
-        #if DEBUG
-        return "test_FpNSeORiadRrKIrxPpXNcVcZjuS"
-        #else
-        return "appl_rPWOgfnUTFvBsOyZQAWyjbywbIM"
-        #endif
-    }
-
-    private static func isKeyAllowedInThisBuild(_ key: String) -> Bool {
-        #if DEBUG
-        return true
-        #else
-        // RevenueCat fatalErrors if a test_ key is used in Release / TestFlight.
-        return !key.hasPrefix("test_")
-        #endif
+        return appStoreAPIKey
     }
 
     static var current: Values? {
