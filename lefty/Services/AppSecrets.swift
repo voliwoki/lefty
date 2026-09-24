@@ -6,7 +6,9 @@ enum AppSecrets {
         let leftyAppSecret: String
     }
 
-    /// Public RevenueCat SDK key (Test Store for Shipaton). Prefer Secrets.plist override.
+    /// Public RevenueCat SDK key.
+    /// - Debug: Test Store (`test_…`) for simulator / Xcode runs
+    /// - Release/TestFlight: App Store (`appl_…`) — Test Store keys intentionally crash Release builds
     static var revenueCatAPIKey: String {
         if
             let url = Bundle.main.url(forResource: "Secrets", withExtension: "plist"),
@@ -14,12 +16,26 @@ enum AppSecrets {
             let plist = try? PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any],
             let key = plist["RevenueCatAPIKey"] as? String,
             !key.isEmpty,
-            !key.hasPrefix("REPLACE")
+            !key.hasPrefix("REPLACE"),
+            isKeyAllowedInThisBuild(key)
         {
             return key
         }
-        // Test Store public key — safe for client; swap for appl_ when App Store ships.
+
+        #if DEBUG
         return "test_FpNSeORiadRrKIrxPpXNcVcZjuS"
+        #else
+        return "appl_rPWOgfnUTFvBsOyZQAWyjbywbIM"
+        #endif
+    }
+
+    private static func isKeyAllowedInThisBuild(_ key: String) -> Bool {
+        #if DEBUG
+        return true
+        #else
+        // RevenueCat fatalErrors if a test_ key is used in Release / TestFlight.
+        return !key.hasPrefix("test_")
+        #endif
     }
 
     static var current: Values? {

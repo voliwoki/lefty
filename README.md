@@ -38,14 +38,13 @@ Without `Secrets.plist`, DEBUG builds fall back to the stub guide service so the
 
 ## Lefty+ (RevenueCat)
 
-Shipaton uses RevenueCat **Test Store** (no App Store Connect required).
+- **Debug (Xcode):** Test Store key (`test_…`) — fake purchase dialog, no App Store Connect needed
+- **TestFlight / Release:** App Store key (`appl_…`) — **required**; RevenueCat intentionally crashes if a `test_` key is used in Release
 
-- Entitlement: `lefty_plus`
-- Packages: **$5/month** (`$rc_monthly`) · **$39/year** (`$rc_annual`)
-- Free allowance: **3 Teach conversions / month**, then paywall
-- Dashboard: https://app.revenuecat.com/projects/24f924fc
-- Public Test Store key lives in `Secrets.example.plist` as `RevenueCatAPIKey` (and ships as a DEBUG-friendly fallback)
+Entitlement: `lefty_plus` · Packages: **$5/month** · **$39/year** · Free: **3 Teach conversions / month**
 
-Open **Settings → Lefty+** to see plans / restore, or exhaust free Teach uses to hit the paywall.
+Dashboard: https://app.revenuecat.com/projects/24f924fc
 
-Purchases open a RevenueCat Test Store dialog (Success / Fail / Cancel) — perfect for the demo video.
+For TestFlight purchases to show real products, create matching IAPs in App Store Connect with IDs `lefty_plus_monthly` and `lefty_plus_annual`, then attach ASC credentials in RevenueCat → Apps → Lefty iOS.
+
+Open **Settings → Lefty+** or finish onboarding to see the paywall.
