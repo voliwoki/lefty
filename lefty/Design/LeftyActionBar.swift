@@ -3,6 +3,7 @@ import SwiftUI
 struct LeftyActionBar: View {
     let primaryTitle: String
     var primaryIcon: String? = nil
+    var primaryTrailingIcon: String? = nil
     var isPrimaryEnabled: Bool = true
     let primaryAction: () -> Void
     var secondaryTitle: String? = nil
@@ -17,13 +18,16 @@ struct LeftyActionBar: View {
                     }
                     Text(primaryTitle)
                         .font(AppFont.headline)
+                    if let primaryTrailingIcon {
+                        Image(systemName: primaryTrailingIcon)
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, AppSpacing.sm)
             }
             .buttonStyle(.borderedProminent)
-            .tint(AppColors.accent)
-            .foregroundStyle(.white)
+            .tint(isPrimaryEnabled ? AppColors.accent : AppColors.separator)
+            .foregroundStyle(isPrimaryEnabled ? .white : AppColors.secondaryText)
             .controlSize(.large)
             .disabled(!isPrimaryEnabled)
 

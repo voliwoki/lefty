@@ -20,8 +20,19 @@ struct LearnCategoryDetailView: View {
             .padding(AppSpacing.lg)
         }
         .background(AppColors.background)
-        .navigationTitle(category.rawValue)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                VStack(spacing: 2) {
+                    Text(category.rawValue)
+                        .font(AppFont.headline)
+                        .foregroundStyle(AppColors.primaryText)
+                    Text("\(guides.count) guide\(guides.count == 1 ? "" : "s")")
+                        .font(AppFont.caption)
+                        .foregroundStyle(AppColors.secondaryText)
+                }
+            }
+        }
     }
 }
 

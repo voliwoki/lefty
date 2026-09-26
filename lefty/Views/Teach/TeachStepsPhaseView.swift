@@ -10,8 +10,10 @@ struct TeachStepsPhaseView: View {
     private var currentStep: GuideStep { guide.steps[stepIndex] }
     private var isFirstStep: Bool { stepIndex == 0 }
     private var isLastStep: Bool { stepIndex == guide.steps.count - 1 }
-    private var primaryButtonTitle: String { isLastStep ? "Done" : "Next" }
+    private var primaryButtonTitle: String { isLastStep ? "Done" : "Next step" }
+    private var primaryTrailingIcon: String? { isLastStep ? nil : "arrow.right" }
     private var secondaryButtonTitle: String? { isFirstStep ? nil : "Back" }
+    private var estimatedMinutes: Int { guide.estimatedMinutes ?? max(1, guide.steps.count) }
 
     private var stepBackAction: (() -> Void)? {
         if isFirstStep {
@@ -22,34 +24,32 @@ struct TeachStepsPhaseView: View {
 
     var body: some View {
         ScrollView {
-            VStack(spacing: AppSpacing.xl) {
-                StepProgressDots(total: guide.steps.count, currentIndex: stepIndex)
-                    .padding(.top, AppSpacing.lg)
-
-                VStack(spacing: AppSpacing.lg) {
-                    ZStack {
-                        Circle()
-                            .fill(AppColors.chipPurpleBg)
-                            .frame(width: 56, height: 56)
-                        Text("\(stepIndex + 1)")
-                            .font(.system(size: 24, weight: .bold, design: .rounded))
-                            .foregroundStyle(AppColors.chipPurpleFg)
-                    }
-                    .accessibilityHidden(true)
-
-                    Text(currentStep.instruction)
-                        .font(AppFont.largeTitle)
-                        .multilineTextAlignment(.center)
-                        .foregroundStyle(AppColors.primaryText)
+            VStack(spacing: AppSpacing.md) {
+                HStack {
+                    Text("Step \(stepIndex + 1) of \(guide.steps.count)")
+                        .font(AppFont.subheadlineEmphasized)
+                        .foregroundStyle(AppColors.secondaryText)
+                    Spacer()
+                    Text("about \(estimatedMinutes) min")
+                        .font(AppFont.caption)
+                        .foregroundStyle(AppColors.secondaryText)
                 }
-                .id(stepIndex)
-                .transition(.asymmetric(
-                    insertion: .move(edge: goingForward ? .trailing : .leading).combined(with: .opacity),
-                    removal: .move(edge: goingForward ? .leading : .trailing).combined(with: .opacity)
-                ))
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, AppSpacing.xxl)
-                .leftyCard(padding: AppSpacing.xl)
+                .padding(.top, AppSpacing.lg)
+
+                StepProgressBar(total: guide.steps.count, currentIndex: stepIndex)
+
+                Text(currentStep.instruction)
+                    .font(AppFont.title)
+                    .multilineTextAlignment(.leading)
+                    .foregroundStyle(AppColors.primaryText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .id(stepIndex)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: goingForward ? .trailing : .leading).combined(with: .opacity),
+                        removal: .move(edge: goingForward ? .leading : .trailing).combined(with: .opacity)
+                    ))
+                    .padding(.vertical, AppSpacing.xxl)
+                    .leftyCard(padding: AppSpacing.xl)
             }
             .padding(AppSpacing.lg)
         }
@@ -57,6 +57,7 @@ struct TeachStepsPhaseView: View {
         .safeAreaInset(edge: .bottom) {
             LeftyActionBar(
                 primaryTitle: primaryButtonTitle,
+                primaryTrailingIcon: primaryTrailingIcon,
                 primaryAction: advance,
                 secondaryTitle: secondaryButtonTitle,
                 secondaryAction: stepBackAction

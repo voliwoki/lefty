@@ -14,6 +14,9 @@ struct GuideRow: View {
                     .font(AppFont.subheadline)
                     .foregroundStyle(AppColors.secondaryText)
                     .lineLimit(2)
+                Text("\(guide.steps.count) step\(guide.steps.count == 1 ? "" : "s") · \(guide.estimatedMinutes) min")
+                    .font(AppFont.captionEmphasized)
+                    .foregroundStyle(guide.category.tone.foreground)
             }
             Spacer(minLength: 0)
         }

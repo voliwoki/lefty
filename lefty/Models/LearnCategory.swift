@@ -13,7 +13,7 @@ enum LearnCategory: String, Codable, CaseIterable, Identifiable, Hashable {
         case .toolsAndAccessories: .green
         case .sports: .pink
         case .instruments: .purple
-        case .kitchen: .yellow
+        case .kitchen: .blue
         }
     }
 

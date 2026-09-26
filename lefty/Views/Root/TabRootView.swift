@@ -1,22 +1,25 @@
 import SwiftUI
 
 struct TabRootView: View {
-    @State private var selectedTab: AppTab = .home
-    @State private var isTeachPresented = false
+    @Environment(AppNavigationCoordinator.self) private var navigation
     @AppStorage("appearancePreference") private var appearanceRawValue: String = AppAppearance.system.rawValue
 
     private var appearance: AppAppearance {
         AppAppearance(rawValue: appearanceRawValue) ?? .system
     }
 
+    init() {
+        UITabBar.appearance().unselectedItemTintColor = UIColor(AppColors.secondaryText)
+    }
+
     private var tabSelection: Binding<AppTab> {
         Binding(
-            get: { selectedTab },
+            get: { navigation.selectedTab },
             set: { newValue in
                 if newValue == .teach {
-                    isTeachPresented = true
+                    navigation.isTeachPresented = true
                 } else {
-                    selectedTab = newValue
+                    navigation.selectedTab = newValue
                 }
             }
         )
@@ -36,16 +39,15 @@ struct TabRootView: View {
                 .tabItem { Label(AppTab.teach.title, systemImage: AppTab.teach.icon) }
                 .tag(AppTab.teach)
 
-            SettingsView()
-                .tabItem { Label(AppTab.settings.title, systemImage: AppTab.settings.icon) }
-                .tag(AppTab.settings)
-
             MyLeftyView()
                 .tabItem { Label(AppTab.myLefty.title, systemImage: AppTab.myLefty.icon) }
                 .tag(AppTab.myLefty)
         }
         .tint(AppColors.accent)
-        .sheet(isPresented: $isTeachPresented) {
+        .sheet(isPresented: Binding(
+            get: { navigation.isTeachPresented },
+            set: { navigation.isTeachPresented = $0 }
+        )) {
             TeachFlowView()
         }
         .preferredColorScheme(appearance.colorScheme)
@@ -55,4 +57,6 @@ struct TabRootView: View {
 
 #Preview {
     TabRootView()
+        .environment(AppNavigationCoordinator())
+        .environment(SubscriptionService())
 }

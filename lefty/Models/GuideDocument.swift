@@ -7,6 +7,9 @@ struct GuideDocument: Codable, Identifiable {
     let icon: String
     let summary: String
     let steps: [GuideStepDocument]
+
+    /// Rough reading/following time, derived from step count (not authored per guide).
+    var estimatedMinutes: Int { max(1, steps.count) }
 }
 
 struct GuideStepDocument: Codable, Identifiable {

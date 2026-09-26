@@ -55,11 +55,13 @@ private struct SplashView: View {
 #Preview("First launch") {
     RootContainerView()
         .environment(SubscriptionService())
+        .environment(AppNavigationCoordinator())
 }
 
 #Preview("Returning") {
     RootContainerView()
         .environment(SubscriptionService())
+        .environment(AppNavigationCoordinator())
         .defaultAppStorage({
             let defaults = UserDefaults(suiteName: "preview.returning")!
             defaults.set(true, forKey: "hasCompletedOnboarding")

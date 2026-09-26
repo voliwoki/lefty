@@ -16,6 +16,8 @@ struct TeachFlowView: View {
     @Environment(SubscriptionService.self) private var subscription
 
     private let guideService: TeachGuideService
+    private let startWithCamera: Bool
+    private let startFocused: Bool
 
     @State private var phase: TeachPhase = .input
     @State private var selectedImage: UIImage?
@@ -25,7 +27,13 @@ struct TeachFlowView: View {
     @State private var errorMessage: String?
     @State private var isPaywallPresented = false
 
-    init(guideService: TeachGuideService = TeachGuideServiceFactory.make()) {
+    init(
+        startWithCamera: Bool = false,
+        startFocused: Bool = false,
+        guideService: TeachGuideService = TeachGuideServiceFactory.make()
+    ) {
+        self.startWithCamera = startWithCamera
+        self.startFocused = startFocused
         self.guideService = guideService
     }
 
@@ -65,7 +73,9 @@ struct TeachFlowView: View {
             TeachInputPhaseView(
                 selectedImage: $selectedImage,
                 typedText: $typedText,
-                onGenerate: generate
+                onGenerate: generate,
+                autoOpenCamera: startWithCamera,
+                autoFocusText: startFocused
             )
         case .processing:
             TeachProcessingPhaseView()

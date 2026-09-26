@@ -76,6 +76,15 @@ enum AppColors {
         light: Color(red: 0.22, green: 0.53, blue: 0.29),
         dark: Color(red: 0.68, green: 0.9, blue: 0.72)
     )
+
+    static let chipBlueBg = Color(
+        light: Color(red: 0.8, green: 0.88, blue: 0.98),
+        dark: Color(red: 0.14, green: 0.26, blue: 0.4)
+    )
+    static let chipBlueFg = Color(
+        light: Color(red: 0.2, green: 0.45, blue: 0.75),
+        dark: Color(red: 0.65, green: 0.82, blue: 0.98)
+    )
 }
 
 private extension Color {

@@ -5,12 +5,25 @@ struct TeachInputPhaseView: View {
     @Binding var selectedImage: UIImage?
     @Binding var typedText: String
     let onGenerate: () -> Void
+    var autoOpenCamera: Bool = false
+    var autoFocusText: Bool = false
 
+    @Environment(SubscriptionService.self) private var subscription
     @State private var photosPickerItem: PhotosPickerItem?
     @State private var isShowingCamera = false
+    @State private var hasAutoOpenedCamera = false
+    @State private var hasAutoFocusedText = false
+    @State private var isPaywallPresented = false
+    @FocusState private var isTextFieldFocused: Bool
+
+    private static let quickStartExamples = ["Tie a tie", "Use scissors", "Chopsticks"]
 
     private var canGenerate: Bool {
         selectedImage != nil || !typedText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    private var usageStatusText: String {
+        TeachUsageStore.statusText(isLeftyPlusActive: subscription.isLeftyPlusActive)
     }
 
     private var textSectionTitle: String {
@@ -46,25 +59,45 @@ struct TeachInputPhaseView: View {
                             .font(AppFont.caption)
                             .foregroundStyle(AppColors.secondaryText)
                     }
-                    TextEditor(text: $typedText)
-                        .font(AppFont.body)
-                        .frame(minHeight: 100)
-                        .padding(AppSpacing.sm)
-                        .background(AppColors.surface)
-                        .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
-                        .accessibilityLabel(String(localized: "Describe what you want to learn"))
+                    ZStack(alignment: .topLeading) {
+                        if typedText.isEmpty {
+                            Text(String(localized: "e.g. how to tie a tie"))
+                                .font(AppFont.body)
+                                .foregroundStyle(AppColors.secondaryText.opacity(0.7))
+                                .padding(.horizontal, AppSpacing.sm + 4)
+                                .padding(.vertical, AppSpacing.sm + 8)
+                                .allowsHitTesting(false)
+                        }
+                        TextEditor(text: $typedText)
+                            .font(AppFont.body)
+                            .frame(minHeight: 100)
+                            .padding(AppSpacing.sm)
+                            .scrollContentBackground(.hidden)
+                            .focused($isTextFieldFocused)
+                    }
+                    .background(AppColors.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
+                    .accessibilityLabel(String(localized: "Describe what you want to learn"))
+
+                    if selectedImage == nil {
+                        quickStartRow
+                    }
                 }
             }
             .padding(AppSpacing.lg)
         }
         .background(AppColors.background)
         .safeAreaInset(edge: .bottom) {
-            LeftyActionBar(
-                primaryTitle: String(localized: "Teach me left-handed"),
-                primaryIcon: "hand.point.up.left.fill",
-                isPrimaryEnabled: canGenerate,
-                primaryAction: onGenerate
-            )
+            VStack(spacing: AppSpacing.sm) {
+                usageRow
+
+                LeftyActionBar(
+                    primaryTitle: String(localized: "Teach me left-handed"),
+                    primaryIcon: "hand.point.up.left.fill",
+                    isPrimaryEnabled: canGenerate,
+                    primaryAction: onGenerate
+                )
+            }
             .padding(AppSpacing.lg)
             .background(AppColors.background)
         }
@@ -73,12 +106,66 @@ struct TeachInputPhaseView: View {
                 selectedImage = image
             }
         }
+        .sheet(isPresented: $isPaywallPresented) {
+            PaywallSheet()
+        }
         .onChange(of: photosPickerItem) { _, newItem in
             Task {
                 if let data = try? await newItem?.loadTransferable(type: Data.self),
                    let uiImage = UIImage(data: data) {
                     selectedImage = uiImage
                 }
+            }
+        }
+        .onAppear {
+            if autoOpenCamera, !hasAutoOpenedCamera {
+                hasAutoOpenedCamera = true
+                isShowingCamera = true
+            }
+        }
+        .task {
+            guard autoFocusText, !hasAutoFocusedText else { return }
+            hasAutoFocusedText = true
+            try? await Task.sleep(for: .seconds(0.35))
+            isTextFieldFocused = true
+        }
+    }
+
+    private var usageRow: some View {
+        HStack(spacing: AppSpacing.xs) {
+            Text(usageStatusText)
+                .font(AppFont.caption)
+                .foregroundStyle(AppColors.secondaryText)
+
+            if !subscription.isLeftyPlusActive {
+                Text("·")
+                    .font(AppFont.caption)
+                    .foregroundStyle(AppColors.secondaryText)
+
+                Button {
+                    isPaywallPresented = true
+                } label: {
+                    Text(String(localized: "Go unlimited"))
+                        .font(AppFont.captionEmphasized)
+                        .foregroundStyle(AppColors.accent)
+                }
+                .buttonStyle(.pressScale)
+            }
+        }
+    }
+
+    private var quickStartRow: some View {
+        HStack(spacing: AppSpacing.sm) {
+            Text(String(localized: "Try:"))
+                .font(AppFont.caption)
+                .foregroundStyle(AppColors.secondaryText)
+            ForEach(Self.quickStartExamples, id: \.self) { example in
+                Button {
+                    typedText = example
+                } label: {
+                    LeftyChip(title: example, tone: .purple)
+                }
+                .buttonStyle(.pressScale)
             }
         }
     }
@@ -117,11 +204,6 @@ struct TeachInputPhaseView: View {
         .padding(AppSpacing.md)
         .background(AppColors.surface)
         .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous)
-                .stroke(AppColors.accent, lineWidth: 2)
-        )
-        .shadow(color: AppColors.accent.opacity(0.18), radius: 8, x: 0, y: 4)
     }
 
     private var uploadCard: some View {
@@ -192,4 +274,5 @@ struct TeachInputPhaseView: View {
         typedText: .constant(""),
         onGenerate: {}
     )
+    .environment(SubscriptionService())
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 enum ChipTone {
-    case yellow, purple, pink, green
+    case yellow, purple, pink, green, blue
 
     var background: Color {
         switch self {
@@ -9,6 +9,7 @@ enum ChipTone {
         case .purple: AppColors.chipPurpleBg
         case .pink: AppColors.chipPinkBg
         case .green: AppColors.chipGreenBg
+        case .blue: AppColors.chipBlueBg
         }
     }
 
@@ -18,6 +19,7 @@ enum ChipTone {
         case .purple: AppColors.chipPurpleFg
         case .pink: AppColors.chipPinkFg
         case .green: AppColors.chipGreenFg
+        case .blue: AppColors.chipBlueFg
         }
     }
 }

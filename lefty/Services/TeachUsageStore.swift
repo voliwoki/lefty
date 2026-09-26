@@ -30,6 +30,14 @@ enum TeachUsageStore {
         return remainingFreeConversions > 0
     }
 
+    @MainActor
+    static func statusText(isLeftyPlusActive: Bool) -> String {
+        if isLeftyPlusActive {
+            return String(localized: "Unlimited with Lefty+")
+        }
+        return String(localized: "\(remainingFreeConversions) of \(freeMonthlyAllowance) free this month")
+    }
+
     /// Call only after a usable guide is delivered (high / uncertain confidence).
     @MainActor
     static func recordSuccessfulConversion(isLeftyPlusActive: Bool) {

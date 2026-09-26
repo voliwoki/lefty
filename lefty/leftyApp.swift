@@ -13,6 +13,7 @@ import OSLog
 @main
 struct leftyApp: App {
     @State private var subscriptionService = SubscriptionService()
+    @State private var navigationCoordinator = AppNavigationCoordinator()
 
     init() {
         FontRegistrar.registerBundledFonts()
@@ -23,6 +24,7 @@ struct leftyApp: App {
         WindowGroup {
             RootContainerView()
                 .environment(subscriptionService)
+                .environment(navigationCoordinator)
                 .task {
                     subscriptionService.start()
                 }

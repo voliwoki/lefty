@@ -1,9 +1,26 @@
 import SwiftUI
 import SwiftData
 
+private enum LibrarySection: CaseIterable, Hashable {
+    case saved, favorites
+
+    var title: String {
+        switch self {
+        case .saved: "Saved"
+        case .favorites: "Favorites"
+        }
+    }
+}
+
 struct MyLeftyView: View {
+    @Environment(SubscriptionService.self) private var subscription
+    @Environment(AppNavigationCoordinator.self) private var navigation
     @Query(sort: \FavoriteGuide.createdAt, order: .reverse) private var favorites: [FavoriteGuide]
     @Query(sort: \SavedGuide.createdAt, order: .reverse) private var savedGuides: [SavedGuide]
+
+    @State private var selectedSection: LibrarySection = .saved
+    @State private var isSettingsPresented = false
+    @State private var isPaywallPresented = false
 
     private var favoritedGuides: [GuideDocument] {
         favorites.compactMap { favorite in
@@ -11,30 +28,30 @@ struct MyLeftyView: View {
         }
     }
 
-    private var hasNothingSaved: Bool {
-        favoritedGuides.isEmpty && savedGuides.isEmpty
+    private var isCurrentSectionEmpty: Bool {
+        selectedSection == .saved ? savedGuides.isEmpty : favoritedGuides.isEmpty
     }
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: AppSpacing.lg) {
-                    statsRow
-                    if hasNothingSaved {
+                    header
+                    planCard
+                    sectionToggle
+
+                    if isCurrentSectionEmpty {
                         emptyState
+                    } else if selectedSection == .saved {
+                        savedGuidesList
                     } else {
-                        if !savedGuides.isEmpty {
-                            savedGuidesSection
-                        }
-                        if !favoritedGuides.isEmpty {
-                            favoritesSection
-                        }
+                        favoritesList
                     }
                 }
                 .padding(AppSpacing.lg)
             }
             .background(AppColors.background)
-            .navigationTitle("My Lefty")
+            .toolbar(.hidden)
             .navigationDestination(for: String.self) { guideId in
                 if let guide = LearnContentLoader.guides.first(where: { $0.id == guideId }) {
                     GuideDetailView(guide: guide)
@@ -43,42 +60,113 @@ struct MyLeftyView: View {
             .navigationDestination(for: SavedGuide.self) { guide in
                 SavedGuideDetailView(guide: guide)
             }
+            .sheet(isPresented: $isSettingsPresented) {
+                SettingsView()
+            }
+            .sheet(isPresented: $isPaywallPresented) {
+                PaywallSheet()
+            }
         }
     }
 
-    private var statsRow: some View {
-        HStack(spacing: AppSpacing.md) {
-            statCard(icon: "square.and.arrow.down.fill", tone: .purple, count: savedGuides.count, label: "saved")
-            statCard(icon: "heart.fill", tone: .pink, count: favoritedGuides.count, label: "favorited")
-        }
-    }
-
-    private func statCard(icon: String, tone: ChipTone, count: Int, label: String) -> some View {
-        VStack(alignment: .leading, spacing: AppSpacing.sm) {
-            LeftyIconBadge(systemImage: icon, tone: tone)
-            Text("\(count)")
-                .font(AppFont.title)
+    private var header: some View {
+        HStack {
+            Text("My Lefty")
+                .font(AppFont.largeTitle)
                 .foregroundStyle(AppColors.primaryText)
-            Text(label)
+            Spacer()
+            Button {
+                isSettingsPresented = true
+            } label: {
+                Image(systemName: "slider.horizontal.3")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundStyle(AppColors.primaryText)
+                    .frame(width: 44, height: 44)
+                    .background(AppColors.surface)
+                    .clipShape(Circle())
+            }
+            .buttonStyle(.pressScale)
+            .accessibilityLabel(String(localized: "Settings"))
+        }
+    }
+
+    private var planCard: some View {
+        HStack(spacing: AppSpacing.md) {
+            VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                Text(subscription.isLeftyPlusActive ? "Lefty+" : "Free plan")
+                    .font(AppFont.headline)
+                    .foregroundStyle(AppColors.primaryText)
+                Text(
+                    subscription.isLeftyPlusActive
+                        ? String(localized: "Unlimited Teach conversions")
+                        : TeachUsageStore.statusText(isLeftyPlusActive: false)
+                )
                 .font(AppFont.caption)
                 .foregroundStyle(AppColors.secondaryText)
+            }
+            Spacer(minLength: AppSpacing.sm)
+            if !subscription.isLeftyPlusActive {
+                Button {
+                    isPaywallPresented = true
+                } label: {
+                    Text("Get Lefty+")
+                        .font(AppFont.subheadlineEmphasized)
+                        .padding(.horizontal, AppSpacing.md)
+                        .frame(minHeight: 36)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(AppColors.brandPurple)
+            }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
         .leftyCard()
     }
 
-    private var savedGuidesSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.md) {
-            Text("Saved from Teach")
-                .font(AppFont.headline)
+    private var sectionToggle: some View {
+        LibrarySectionSlider(selection: $selectedSection)
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: AppSpacing.md) {
+            HandDrawnHandIcon(size: 72)
+            Text("Nothing saved yet")
+                .font(AppFont.title)
                 .foregroundStyle(AppColors.primaryText)
-            LazyVStack(spacing: AppSpacing.md) {
-                ForEach(savedGuides) { guide in
-                    NavigationLink(value: guide) {
-                        savedGuideRow(guide)
-                    }
-                    .buttonStyle(.pressScale)
+            Text("Tap the heart on any guide, or save a Teach result. It'll be waiting here.")
+                .font(AppFont.body)
+                .foregroundStyle(AppColors.secondaryText)
+                .multilineTextAlignment(.center)
+
+            Button {
+                navigation.switchTo(.learn)
+            } label: {
+                Text("Browse Learn")
+                    .font(AppFont.headline)
+                    .frame(maxWidth: .infinity, minHeight: 44)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(AppColors.accent)
+            .padding(.top, AppSpacing.sm)
+
+            Button {
+                navigation.openTeach()
+            } label: {
+                Text("or teach me something")
+                    .font(AppFont.subheadlineEmphasized)
+                    .foregroundStyle(AppColors.accent)
+            }
+            .buttonStyle(.pressScale)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, AppSpacing.xl)
+    }
+
+    private var savedGuidesList: some View {
+        LazyVStack(spacing: AppSpacing.md) {
+            ForEach(savedGuides) { guide in
+                NavigationLink(value: guide) {
+                    savedGuideRow(guide)
                 }
+                .buttonStyle(.pressScale)
             }
         }
     }
@@ -99,42 +187,62 @@ struct MyLeftyView: View {
         .leftyCard()
     }
 
-    private var favoritesSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.md) {
-            Text("Favorites")
-                .font(AppFont.headline)
-                .foregroundStyle(AppColors.primaryText)
-            LazyVStack(spacing: AppSpacing.md) {
-                ForEach(favoritedGuides) { guide in
-                    NavigationLink(value: guide.id) {
-                        GuideRow(guide: guide)
-                    }
-                    .buttonStyle(.pressScale)
+    private var favoritesList: some View {
+        LazyVStack(spacing: AppSpacing.md) {
+            ForEach(favoritedGuides) { guide in
+                NavigationLink(value: guide.id) {
+                    GuideRow(guide: guide)
                 }
+                .buttonStyle(.pressScale)
             }
         }
     }
+}
 
-    private var emptyState: some View {
-        VStack(spacing: AppSpacing.md) {
-            Image(systemName: "heart")
-                .font(.system(size: 32))
-                .foregroundStyle(AppColors.accent)
-                .accessibilityHidden(true)
-            Text("Nothing here yet")
-                .font(AppFont.title)
-                .foregroundStyle(AppColors.primaryText)
-            Text("Guides you save from Teach Me Left-Handed or favorite in Learn will show up here.")
-                .font(AppFont.body)
-                .foregroundStyle(AppColors.secondaryText)
-                .multilineTextAlignment(.center)
+private struct LibrarySectionSlider: View {
+    @Binding var selection: LibrarySection
+    @Namespace private var namespace
+    @State private var displayedSelection: LibrarySection
+
+    init(selection: Binding<LibrarySection>) {
+        self._selection = selection
+        self._displayedSelection = State(initialValue: selection.wrappedValue)
+    }
+
+    var body: some View {
+        HStack(spacing: 4) {
+            ForEach(LibrarySection.allCases, id: \.self) { option in
+                Text(option.title)
+                    .font(AppFont.subheadlineEmphasized)
+                    .foregroundStyle(displayedSelection == option ? AppColors.primaryText : AppColors.secondaryText)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, AppSpacing.sm)
+                    .background {
+                        if displayedSelection == option {
+                            Capsule()
+                                .fill(.white)
+                                .matchedGeometryEffect(id: "librarySelection", in: namespace)
+                        }
+                    }
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.75)) {
+                            displayedSelection = option
+                        }
+                        selection = option
+                    }
+                    .accessibilityAddTraits(displayedSelection == option ? .isSelected : [])
+            }
         }
-        .frame(maxWidth: .infinity)
-        .padding(.top, AppSpacing.xxl)
+        .padding(4)
+        .background(AppColors.chipPurpleBg)
+        .clipShape(Capsule())
     }
 }
 
 #Preview {
     MyLeftyView()
+        .environment(SubscriptionService())
+        .environment(AppNavigationCoordinator())
         .modelContainer(for: [FavoriteGuide.self, SavedGuide.self], inMemory: true)
 }
