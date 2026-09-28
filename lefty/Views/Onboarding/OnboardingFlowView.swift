@@ -62,11 +62,16 @@ struct OnboardingFlowView: View {
 
     private var identityStep: some View {
         VStack(alignment: .leading, spacing: 0) {
-            topChrome(showSkip: true)
+            topChrome
 
             Spacer(minLength: AppSpacing.lg)
 
-            HandDrawnHandIcon(size: 56)
+            Image("OnboardingWriting")
+                .resizable()
+                .scaledToFit()
+                .frame(maxHeight: 180)
+                .frame(maxWidth: .infinity)
+                .accessibilityHidden(true)
                 .padding(.bottom, AppSpacing.md)
 
             Text(OnboardingCopy.identityHeadline)
@@ -99,9 +104,9 @@ struct OnboardingFlowView: View {
 
     private func contentStep(page: OnboardingPageContent) -> some View {
         VStack(spacing: 0) {
-            topChrome(showSkip: true)
+            topChrome
             OnboardingPageView(
-                symbolName: page.symbolName,
+                illustrationName: page.illustrationName,
                 headline: page.headline,
                 bodyText: page.body,
                 primaryTitle: page.primaryCTA,
@@ -110,18 +115,25 @@ struct OnboardingFlowView: View {
         }
     }
 
-    private func topChrome(showSkip: Bool) -> some View {
-        HStack {
-            StepProgressDots(total: progressTotal, currentIndex: min(progressIndex, progressTotal - 1))
-            Spacer()
-            if showSkip {
-                Button(OnboardingCopy.skipTitle) {
-                    completeOnboarding()
+    private var topChrome: some View {
+        ZStack {
+            StepProgressDots(
+                total: progressTotal,
+                currentIndex: min(progressIndex, progressTotal - 1)
+            )
+            .frame(maxWidth: .infinity)
+
+            HStack {
+                Spacer()
+                Button(action: completeOnboarding) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(AppColors.secondaryText)
+                        .frame(minWidth: 44, minHeight: 44)
+                        .contentShape(Rectangle())
                 }
-                .font(AppFont.subheadlineEmphasized)
-                .foregroundStyle(AppColors.secondaryText)
-                .frame(minWidth: 44, minHeight: 44)
                 .buttonStyle(.pressScale)
+                .accessibilityLabel(String(localized: "Close"))
             }
         }
         .padding(.top, AppSpacing.sm)

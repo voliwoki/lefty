@@ -78,7 +78,7 @@ struct MyLeftyView: View {
             Button {
                 isSettingsPresented = true
             } label: {
-                Image(systemName: "slider.horizontal.3")
+                Image(systemName: "gearshape")
                     .font(.system(size: 16, weight: .semibold))
                     .foregroundStyle(AppColors.primaryText)
                     .frame(width: 44, height: 44)

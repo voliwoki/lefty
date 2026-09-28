@@ -21,60 +21,45 @@ struct GuideDetailView: View {
 
     private var isFavorited: Bool { !favorites.isEmpty }
     private var currentStep: GuideStepDocument { guide.steps[stepIndex] }
-    private var isFirstStep: Bool { stepIndex == 0 }
     private var isLastStep: Bool { stepIndex == guide.steps.count - 1 }
     private var favoriteIconName: String { isFavorited ? "heart.fill" : "heart" }
     private var favoriteAccessibilityLabel: String { isFavorited ? "Remove from favorites" : "Add to favorites" }
-    private var primaryButtonTitle: String { isLastStep ? "Done" : "Next step" }
-    private var primaryTrailingIcon: String? { isLastStep ? nil : "arrow.right" }
-    private var secondaryButtonTitle: String? { isFirstStep ? nil : "Back" }
-
-    private var stepBackAction: (() -> Void)? {
-        if isFirstStep {
-            return nil
-        }
-        return goBack
-    }
 
     var body: some View {
         ScrollView {
-            VStack(spacing: AppSpacing.md) {
-                HStack {
+            VStack(alignment: .leading, spacing: AppSpacing.lg) {
+                VStack(alignment: .leading, spacing: AppSpacing.sm) {
                     Text("Step \(stepIndex + 1) of \(guide.steps.count)")
                         .font(AppFont.subheadlineEmphasized)
                         .foregroundStyle(AppColors.secondaryText)
-                    Spacer()
-                    Text("about \(guide.estimatedMinutes) min")
-                        .font(AppFont.caption)
-                        .foregroundStyle(AppColors.secondaryText)
-                }
-                .padding(.top, AppSpacing.xxl)
 
-                StepProgressBar(total: guide.steps.count, currentIndex: stepIndex)
+                    StepProgressBar(total: guide.steps.count, currentIndex: stepIndex)
+                }
+                .padding(.top, AppSpacing.md)
 
                 Text(currentStep.instruction)
-                    .font(AppFont.title)
+                    .font(AppFont.body)
                     .multilineTextAlignment(.leading)
                     .foregroundStyle(AppColors.primaryText)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .fixedSize(horizontal: false, vertical: true)
                     .id(stepIndex)
                     .transition(.asymmetric(
                         insertion: .move(edge: goingForward ? .trailing : .leading).combined(with: .opacity),
                         removal: .move(edge: goingForward ? .leading : .trailing).combined(with: .opacity)
                     ))
-                    .padding(.vertical, AppSpacing.xxl)
-                    .leftyCard(padding: AppSpacing.xl)
+                    .leftyCard(padding: AppSpacing.lg)
             }
             .padding(AppSpacing.lg)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .animation(.easeInOut(duration: 0.25), value: stepIndex)
         }
         .background(AppColors.background)
         .safeAreaInset(edge: .bottom) {
             LeftyActionBar(
-                primaryTitle: primaryButtonTitle,
-                primaryTrailingIcon: primaryTrailingIcon,
-                primaryAction: advance,
-                secondaryTitle: secondaryButtonTitle,
-                secondaryAction: stepBackAction
+                primaryTitle: isLastStep ? String(localized: "Done") : String(localized: "Next step"),
+                primaryTrailingIcon: isLastStep ? nil : "arrow.right",
+                primaryAction: advance
             )
             .padding(AppSpacing.lg)
             .background(AppColors.background)
@@ -85,6 +70,7 @@ struct GuideDetailView: View {
                 Text(guide.title)
                     .font(AppFont.headline)
                     .foregroundStyle(AppColors.primaryText)
+                    .lineLimit(1)
             }
             ToolbarItem(placement: .topBarTrailing) {
                 LeftyIconButton(
@@ -119,13 +105,6 @@ struct GuideDetailView: View {
             withAnimation(.easeInOut(duration: 0.25)) {
                 stepIndex += 1
             }
-        }
-    }
-
-    private func goBack() {
-        goingForward = false
-        withAnimation(.easeInOut(duration: 0.25)) {
-            stepIndex = max(0, stepIndex - 1)
         }
     }
 

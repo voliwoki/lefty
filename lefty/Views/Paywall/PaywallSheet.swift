@@ -88,9 +88,18 @@ struct PaywallSheet: View {
                 return
             }
 
+            let packageSummary = current.availablePackages.map { pkg in
+                let productID = pkg.storeProduct.productIdentifier
+                return "\(pkg.identifier)=\(productID)"
+            }.joined(separator: ", ")
             logger.info(
-                "Offering \(current.identifier, privacy: .public) packages=\(current.availablePackages.count, privacy: .public) hasPaywall=\(current.hasPaywall, privacy: .public)"
+                "Offering \(current.identifier, privacy: .public) packages=\(current.availablePackages.count, privacy: .public) [\(packageSummary, privacy: .public)] hasPaywall=\(current.hasPaywall, privacy: .public)"
             )
+            if current.availablePackages.count < 2 {
+                logger.error(
+                    "Expected monthly+annual; StoreKit only returned \(current.availablePackages.count, privacy: .public) package(s). RC catalog is fine — Apple did not return lefty_plus_annual to this device."
+                )
+            }
             if !current.hasPaywall {
                 logger.error("Offering has products but no published paywall template — SDK will show fallback")
             }

@@ -11,6 +11,7 @@ final class SubscriptionService {
     private(set) var isLeftyPlusActive = false
     private(set) var isLoadingEntitlement = true
     private(set) var lastErrorMessage: String?
+    private(set) var lastStatusMessage: String?
 
     private let logger = Logger(subsystem: "com.knk.lefty", category: "Subscription")
     private var observationTask: Task<Void, Never>?
@@ -20,7 +21,7 @@ final class SubscriptionService {
         observationTask = Task { [weak self] in
             guard let self else { return }
             for await info in Purchases.shared.customerInfoStream {
-                self.apply(customerInfo: info)
+                self.apply(customerInfo: info, clearStatus: false)
             }
         }
     }
@@ -32,24 +33,35 @@ final class SubscriptionService {
         } catch {
             logger.error("customerInfo failed: \(error.localizedDescription, privacy: .public)")
             lastErrorMessage = String(localized: "Couldn't check Lefty+ status. Try again.")
+            lastStatusMessage = nil
             isLoadingEntitlement = false
         }
     }
 
     func restorePurchases() async {
+        lastStatusMessage = nil
+        lastErrorMessage = nil
         do {
             let info = try await Purchases.shared.restorePurchases()
             apply(customerInfo: info)
-            lastErrorMessage = nil
+            if isLeftyPlusActive {
+                lastStatusMessage = String(localized: "Lefty+ restored")
+            } else {
+                lastStatusMessage = String(localized: "No purchases to restore")
+            }
         } catch {
             logger.error("restore failed: \(error.localizedDescription, privacy: .public)")
             lastErrorMessage = String(localized: "Couldn't restore purchases. Try again.")
+            lastStatusMessage = nil
         }
     }
 
-    private func apply(customerInfo: CustomerInfo) {
+    private func apply(customerInfo: CustomerInfo, clearStatus: Bool = true) {
         isLeftyPlusActive = customerInfo.entitlements[Self.entitlementID]?.isActive == true
         isLoadingEntitlement = false
         lastErrorMessage = nil
+        if clearStatus {
+            lastStatusMessage = nil
+        }
     }
 }

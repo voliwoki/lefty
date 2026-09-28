@@ -4,23 +4,23 @@ struct TeachOverviewPhaseView: View {
     let guide: GeneratedGuide
     let onStart: () -> Void
 
+    private var minutes: Int {
+        guide.estimatedMinutes ?? max(1, guide.steps.count)
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: AppSpacing.lg) {
-                VStack(alignment: .leading, spacing: AppSpacing.xs) {
+                VStack(alignment: .leading, spacing: AppSpacing.sm) {
                     Text(guide.title)
                         .font(AppFont.title)
                         .foregroundStyle(AppColors.primaryText)
-                    if let minutes = guide.estimatedMinutes {
-                        Text("About \(minutes) minutes")
-                            .font(AppFont.caption)
-                            .foregroundStyle(AppColors.secondaryText)
-                    }
-                }
+                        .fixedSize(horizontal: false, vertical: true)
 
-                Text(guide.summary)
-                    .font(AppFont.body)
-                    .foregroundStyle(AppColors.secondaryText)
+                    Text("About \(minutes) minutes · \(guide.steps.count) steps")
+                        .font(AppFont.caption)
+                        .foregroundStyle(AppColors.secondaryText)
+                }
 
                 if guide.confidence == .uncertain {
                     HStack(alignment: .top, spacing: AppSpacing.sm) {
@@ -31,6 +31,7 @@ struct TeachOverviewPhaseView: View {
                             .foregroundStyle(AppColors.primaryText)
                     }
                     .padding(AppSpacing.md)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .background(AppColors.chipYellowBg)
                     .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
                 }
@@ -44,19 +45,31 @@ struct TeachOverviewPhaseView: View {
                             .foregroundStyle(AppColors.primaryText)
                     }
                     .padding(AppSpacing.md)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .background(AppColors.chipPinkBg)
                     .clipShape(RoundedRectangle(cornerRadius: AppRadius.md, style: .continuous))
                 }
 
-                infoRow(title: "What changes", text: guide.whatChanges, tone: .yellow)
-                infoRow(title: "What stays the same", text: guide.whatStaysSame, tone: .green)
+                VStack(spacing: AppSpacing.md) {
+                    infoCard(
+                        title: String(localized: "What changes"),
+                        text: guide.whatChanges,
+                        tone: .yellow
+                    )
+                    infoCard(
+                        title: String(localized: "What stays the same"),
+                        text: guide.whatStaysSame,
+                        tone: .green
+                    )
+                }
             }
             .padding(AppSpacing.lg)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .background(AppColors.background)
         .safeAreaInset(edge: .bottom) {
             LeftyActionBar(
-                primaryTitle: "Start",
+                primaryTitle: String(localized: "Start"),
                 primaryIcon: "play.fill",
                 primaryAction: onStart
             )
@@ -65,18 +78,22 @@ struct TeachOverviewPhaseView: View {
         }
     }
 
-    private func infoRow(title: String, text: String, tone: ChipTone) -> some View {
-        HStack(alignment: .top, spacing: AppSpacing.md) {
-            LeftyIconBadge(systemImage: "circle.fill", tone: tone)
-            VStack(alignment: .leading, spacing: AppSpacing.xs) {
-                Text(title)
-                    .font(AppFont.headline)
-                    .foregroundStyle(AppColors.primaryText)
-                Text(text)
-                    .font(AppFont.subheadline)
-                    .foregroundStyle(AppColors.secondaryText)
-            }
+    private func infoCard(title: String, text: String, tone: ChipTone) -> some View {
+        VStack(alignment: .leading, spacing: AppSpacing.sm) {
+            Text(title)
+                .font(AppFont.captionEmphasized)
+                .foregroundStyle(tone.foreground)
+                .padding(.horizontal, AppSpacing.sm)
+                .padding(.vertical, AppSpacing.xs)
+                .background(tone.background)
+                .clipShape(Capsule())
+
+            Text(text)
+                .font(AppFont.body)
+                .foregroundStyle(AppColors.primaryText)
+                .fixedSize(horizontal: false, vertical: true)
         }
-        .leftyCard()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .leftyCard(padding: AppSpacing.md)
     }
 }

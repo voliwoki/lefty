@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct OnboardingPageView: View {
-    let symbolName: String
+    let illustrationName: String
     let headline: String
     let bodyText: String
     let primaryTitle: String
@@ -13,9 +13,13 @@ struct OnboardingPageView: View {
         VStack(alignment: .leading, spacing: 0) {
             Spacer(minLength: AppSpacing.lg)
 
-            illustration
+            Image(illustrationName)
+                .resizable()
+                .scaledToFit()
+                .frame(maxHeight: 200)
                 .frame(maxWidth: .infinity)
                 .padding(.bottom, AppSpacing.xl)
+                .accessibilityHidden(true)
 
             Text(headline)
                 .font(AppFont.largeTitle)
@@ -42,32 +46,14 @@ struct OnboardingPageView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .background(AppColors.background)
     }
-
-    private var illustration: some View {
-        ZStack {
-            Circle()
-                .fill(AppColors.chipPurpleBg)
-                .frame(width: 160, height: 160)
-
-            Image(systemName: symbolName)
-                .font(.system(size: 64, weight: .medium))
-                .foregroundStyle(AppColors.brandPurple)
-                .symbolRenderingMode(.hierarchical)
-                .accessibilityHidden(true)
-        }
-        .frame(height: 180)
-        .accessibilityHidden(true)
-    }
 }
 
 #Preview {
     OnboardingPageView(
-        symbolName: "globe.americas.fill",
+        illustrationName: "OnboardingSignpost",
         headline: "The world was built for the other hand.",
         bodyText: "Scissors, notebooks, knots — most how-tos assume a right hand.",
         primaryTitle: "That's me",
-        secondaryTitle: "Skip",
-        onPrimary: {},
-        onSecondary: {}
+        onPrimary: {}
     )
 }

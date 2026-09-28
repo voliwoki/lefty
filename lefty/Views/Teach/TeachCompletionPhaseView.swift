@@ -3,7 +3,6 @@ import SwiftUI
 struct TeachCompletionPhaseView: View {
     let isSaved: Bool
     let onSave: () -> Void
-    let onDone: () -> Void
 
     @State private var checkmarkVisible = false
 
@@ -35,12 +34,10 @@ struct TeachCompletionPhaseView: View {
                 .padding(.horizontal, AppSpacing.xl)
             Spacer()
             LeftyActionBar(
-                primaryTitle: isSaved ? "Saved" : "Save to My Lefty",
+                primaryTitle: isSaved ? String(localized: "Saved") : String(localized: "Save to My Lefty"),
                 primaryIcon: isSaved ? "checkmark" : "square.and.arrow.down",
                 isPrimaryEnabled: !isSaved,
-                primaryAction: onSave,
-                secondaryTitle: "Done",
-                secondaryAction: onDone
+                primaryAction: onSave
             )
             .padding(.horizontal, AppSpacing.lg)
         }

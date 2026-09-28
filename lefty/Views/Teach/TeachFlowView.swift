@@ -26,6 +26,7 @@ struct TeachFlowView: View {
     @State private var isSaved = false
     @State private var errorMessage: String?
     @State private var isPaywallPresented = false
+    @State private var stepIndex = 0
 
     init(
         startWithCamera: Bool = false,
@@ -37,11 +38,27 @@ struct TeachFlowView: View {
         self.guideService = guideService
     }
 
+    private var showsBackButton: Bool {
+        switch phase {
+        case .overview, .steps:
+            true
+        case .input, .processing, .declined, .completion:
+            false
+        }
+    }
+
     var body: some View {
         NavigationStack {
             content
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
+                        if showsBackButton {
+                            LeftyIconButton(systemImage: "chevron.left", accessibilityLabel: "Back") {
+                                goBack()
+                            }
+                        }
+                    }
+                    ToolbarItem(placement: .topBarTrailing) {
                         LeftyIconButton(systemImage: "xmark", accessibilityLabel: "Close") {
                             dismiss()
                         }
@@ -85,14 +102,38 @@ struct TeachFlowView: View {
             }
         case .overview:
             if let generatedGuide {
-                TeachOverviewPhaseView(guide: generatedGuide, onStart: { phase = .steps })
+                TeachOverviewPhaseView(guide: generatedGuide, onStart: {
+                    stepIndex = 0
+                    phase = .steps
+                })
             }
         case .steps:
             if let generatedGuide {
-                TeachStepsPhaseView(guide: generatedGuide, onComplete: { phase = .completion })
+                TeachStepsPhaseView(
+                    guide: generatedGuide,
+                    stepIndex: $stepIndex,
+                    onComplete: { phase = .completion }
+                )
             }
         case .completion:
-            TeachCompletionPhaseView(isSaved: isSaved, onSave: save, onDone: { dismiss() })
+            TeachCompletionPhaseView(isSaved: isSaved, onSave: save)
+        }
+    }
+
+    private func goBack() {
+        switch phase {
+        case .overview:
+            phase = .input
+        case .steps:
+            if stepIndex > 0 {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    stepIndex -= 1
+                }
+            } else {
+                phase = .overview
+            }
+        default:
+            break
         }
     }
 
@@ -130,6 +171,7 @@ struct TeachFlowView: View {
         guard let generatedGuide else { return }
         modelContext.insert(SavedGuide(title: generatedGuide.title, steps: generatedGuide.steps))
         isSaved = true
+        dismiss()
     }
 }
 
