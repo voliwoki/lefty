@@ -145,12 +145,12 @@ enum FamousLeftyPool {
             didYouKnow: "He composed the musical scores for many of his own films, despite having no formal musical training."
         ),
         FamousLefty(
-            name: "Fred Astaire",
-            field: "Dancer & actor",
-            bornYear: 1899,
-            icon: "film.fill",
-            blurb: "Widely considered one of the greatest dancers in film history, he starred in a string of classic Hollywood musicals. He was left-handed.",
-            didYouKnow: "He insisted on filming his dance numbers in as few takes as possible, often in one continuous shot."
+            name: "Billie Eilish",
+            field: "Singer-songwriter",
+            bornYear: 2001,
+            icon: "music.note",
+            blurb: "One of the best-selling artists of her generation, she's won multiple Grammy Awards and two Academy Awards for her music. She's spoken openly about being left-handed, including how she plays guitar and writes.",
+            didYouKnow: "She wrote and recorded much of her breakout album entirely at home with her brother, producer Finneas."
         ),
         FamousLefty(
             name: "Mark Twain",
