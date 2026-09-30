@@ -165,7 +165,7 @@ struct SettingsView: View {
     }
 
     private var thankYouSection: some View {
-        Text(String(localized: "Thank you for downloading and using Lefty. Your support keeps Lefty going ad-free and 100% private."))
+        Text(String(localized: "Thank you for downloading and using Lefty. Your support keeps Lefty ad-free. Saved guides stay on your device — Teach only sends what you submit to generate left-handed steps."))
             .font(AppFont.body)
             .foregroundStyle(AppColors.secondaryText)
             .fixedSize(horizontal: false, vertical: true)
@@ -186,8 +186,14 @@ struct SettingsView: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                 HStack(spacing: AppSpacing.lg) {
-                    creatorChip(name: String(localized: "Oliver"), age: 13)
-                    creatorChip(name: String(localized: "Nina"), age: 51)
+                    creatorChip(
+                        name: String(localized: "Oliver"),
+                        role: String(localized: "Student builder")
+                    )
+                    creatorChip(
+                        name: String(localized: "Nina"),
+                        role: String(localized: "Co-builder")
+                    )
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -243,12 +249,12 @@ struct SettingsView: View {
         .buttonStyle(.pressScale)
     }
 
-    private func creatorChip(name: String, age: Int) -> some View {
+    private func creatorChip(name: String, role: String) -> some View {
         VStack(alignment: .leading, spacing: AppSpacing.xs) {
             Text(name)
                 .font(AppFont.headline)
                 .foregroundStyle(AppColors.primaryText)
-            Text(String(localized: "Age \(age)"))
+            Text(role)
                 .font(AppFont.caption)
                 .foregroundStyle(AppColors.secondaryText)
         }

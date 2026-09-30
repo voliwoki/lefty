@@ -5,6 +5,7 @@
 
 const SCHEMA_VERSION = "1";
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
+const MAX_TEXT_CHARS = 4_000;
 
 const GUIDE_JSON_SCHEMA = {
   type: "object",
@@ -72,38 +73,57 @@ interface TeachRequestBody {
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+    // Native iOS clients do not need CORS. Omit open CORS to discourage browser abuse.
     if (request.method === "OPTIONS") {
-      return cors(new Response(null, { status: 204 }));
+      return new Response(null, { status: 204 });
     }
 
     const url = new URL(request.url);
     if (request.method !== "POST" || url.pathname !== "/v1/teach") {
-      return cors(json({ error: "not_found" }, 404));
+      return json({ error: "not_found" }, 404);
+    }
+
+    const clientIP = request.headers.get("CF-Connecting-IP") ?? "unknown";
+    const ipLimit = await env.TEACH_RATE_LIMITER.limit({ key: `ip:${clientIP}` });
+    if (!ipLimit.success) {
+      return json({ error: "rate_limited" }, 429);
     }
 
     const provided = request.headers.get("X-Lefty-App-Secret") ?? "";
     if (!secretsEqual(provided, env.LEFTY_APP_SECRET)) {
-      return cors(json({ error: "unauthorized" }, 401));
+      return json({ error: "unauthorized" }, 401);
+    }
+
+    // Cap cost if a leaked app secret is reused across many IPs.
+    const secretKey = await shortHash(provided);
+    const secretLimit = await env.TEACH_RATE_LIMITER.limit({
+      key: `secret:${secretKey}`,
+    });
+    if (!secretLimit.success) {
+      return json({ error: "rate_limited" }, 429);
     }
 
     if (!env.OPENAI_API_KEY) {
       console.error(JSON.stringify({ event: "missing_openai_key" }));
-      return cors(json({ error: "teach_failed" }, 502));
+      return json({ error: "teach_failed" }, 502);
     }
 
     let body: TeachRequestBody;
     try {
       body = (await request.json()) as TeachRequestBody;
     } catch {
-      return cors(json({ error: "invalid_json" }, 400));
+      return json({ error: "invalid_json" }, 400);
     }
 
     const schemaVersion = body.schemaVersion ?? SCHEMA_VERSION;
     if (schemaVersion !== SCHEMA_VERSION) {
-      return cors(json({ error: "unsupported_schema" }, 400));
+      return json({ error: "unsupported_schema" }, 400);
     }
 
-    const text = typeof body.text === "string" ? body.text.trim() : "";
+    const text =
+      typeof body.text === "string"
+        ? body.text.trim().slice(0, MAX_TEXT_CHARS)
+        : "";
     const imageBase64 =
       typeof body.imageBase64 === "string" ? body.imageBase64.trim() : "";
     const mimeType =
@@ -112,13 +132,13 @@ export default {
         : "image/jpeg";
 
     if (!text && !imageBase64) {
-      return cors(json({ error: "text_or_image_required" }, 400));
+      return json({ error: "text_or_image_required" }, 400);
     }
 
     if (imageBase64) {
       const approxBytes = Math.floor((imageBase64.length * 3) / 4);
       if (approxBytes > MAX_IMAGE_BYTES) {
-        return cors(json({ error: "image_too_large" }, 400));
+        return json({ error: "image_too_large" }, 400);
       }
     }
 
@@ -129,7 +149,7 @@ export default {
         mimeType,
         env,
       });
-      return cors(json(guide, 200));
+      return json(guide, 200);
     } catch (err) {
       console.error(
         JSON.stringify({
@@ -137,7 +157,7 @@ export default {
           message: String(err),
         }),
       );
-      return cors(json({ error: "teach_failed" }, 502));
+      return json({ error: "teach_failed" }, 502);
     }
   },
 };
@@ -257,20 +277,23 @@ function secretsEqual(provided: string, expected: string | undefined): boolean {
   return diff === 0;
 }
 
+async function shortHash(value: string): Promise<string> {
+  const data = new TextEncoder().encode(value);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  const bytes = new Uint8Array(digest);
+  let hex = "";
+  for (let i = 0; i < 8; i++) {
+    hex += bytes[i]!.toString(16).padStart(2, "0");
+  }
+  return hex;
+}
+
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
     status,
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      "cache-control": "no-store",
+    },
   });
-}
-
-function cors(response: Response): Response {
-  const headers = new Headers(response.headers);
-  headers.set("access-control-allow-origin", "*");
-  headers.set(
-    "access-control-allow-headers",
-    "content-type, x-lefty-app-secret",
-  );
-  headers.set("access-control-allow-methods", "POST, OPTIONS");
-  return new Response(response.body, { status: response.status, headers });
 }

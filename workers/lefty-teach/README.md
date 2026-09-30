@@ -6,18 +6,24 @@ Proxies **Teach Me Left-Handed** to OpenAI. The OpenAI API key never ships in th
 **Endpoint:** `POST /v1/teach`  
 **Auth header:** `X-Lefty-App-Secret`
 
-## One-time: plug in your OpenAI key
+## Security
 
-From this folder:
+- `OPENAI_API_KEY` and `LEFTY_APP_SECRET` are Wrangler secrets — never commit them.
+- Rate limit: **20 requests / 60s** per client IP and per app-secret fingerprint (Cloudflare Rate Limiting binding).
+- No open CORS (native iOS only).
+- Text input capped; images capped at 4MB.
+
+Set an OpenAI **usage/spend limit** in the OpenAI dashboard as a backstop.
+
+## One-time: plug in your OpenAI key
 
 ```bash
 cd workers/lefty-teach
 npx wrangler secret put OPENAI_API_KEY
+npx wrangler secret put LEFTY_APP_SECRET
 ```
 
-Paste your key when prompted. Do not commit it.
-
-`LEFTY_APP_SECRET` is already set on the Worker. Use the same value in local `lefty/Secrets.plist` (gitignored). See `Secrets.example.plist`.
+Use the same `LEFTY_APP_SECRET` value in local `lefty/Secrets.plist` (gitignored). See `Secrets.example.plist`.
 
 ## Local dev
 

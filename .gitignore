@@ -10,17 +10,20 @@ DerivedData/
 !default.mode2v3
 !default.perspectivev3
 xcuserdata/
+**/xcuserdata/
 *.xccheckout
 *.moved-aside
 *.hmap
 *.ipa
 *.xcuserstate
+*.xcscmblueprint
 
 # macOS
 .DS_Store
 
 # Secrets — never commit real API keys/config
 Secrets.plist
+**/Secrets.plist
 Secrets.xcconfig
 *.env
 .env
@@ -29,3 +32,4 @@ Secrets.xcconfig
 workers/**/.dev.vars
 workers/**/node_modules/
 workers/**/.wrangler/
+workers/**/.wrangler-logs/
